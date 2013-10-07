@@ -140,6 +140,40 @@ MammaGenerator.prototype.projectfiles = function projectfiles() {
   this.copy('jshintrc', '.jshintrc');
 };
 
+MammaGenerator.prototype.writeIndex = function writeIndex() {
+
+  this.indexFile = this.readFileAsString(path.join(this.sourceRoot(), 'index.html'));
+  this.indexFile = this.engine(this.indexFile, this);
+
+  if (!this.includeRequireJS) {
+    this.indexFile = this.appendScripts(this.indexFile, 'scripts/main.js', [
+      'scripts/main.js'
+    ]);
+    }
+}
+
+// TODO(mklabs): to be put in a subgenerator like rjs:app
+MammaGenerator.prototype.requirejs = function requirejs() {
+  if (!this.includeRequireJS) {
+    return;
+  }
+
+  this.indexFile = this.appendScripts(this.indexFile, 'scripts/main.js', ['bower_components/requirejs/require.js'], {
+    'data-main': 'scripts/main'
+  });
+
+  // add a basic amd module
+  this.write('app/scripts/app.js', [
+    '/*global define */',
+    'define([], function () {',
+    '    \'use strict\';\n',
+    '    return \'\\\'Allo \\\'Allo!\';',
+    '});'
+  ].join('\n'));
+
+  this.template('require_main.js', 'app/scripts/main.js');
+};
+
 MammaGenerator.prototype.app = function app() {
   this.mkdir('app');
 

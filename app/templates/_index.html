@@ -1,4 +1,5 @@
  <!DOCTYPE html>
+ <html>
 <!--[if lt IE 7]>
       <html class = "no-js lt-ie9 lt-ie8 lt-ie7">
       <![endif]-->
@@ -19,56 +20,76 @@
       <!--[if gt IE 8]><!-->
 
 <!--<![endif]-->
-
-
+<head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <title><%= name %></title>
     <meta name="description" content="<%= description %>">
     <meta name="keywords" content="<%= keywords %>">
     <meta name="viewport" content="width=device-width">
+    <link rel="stylesheet" href="public/styles/main.css">
+</head>
 
-    <!-- Place styles and javascript here -->
-
-
-
-<div class="container">
-    <header>
-        <label for="toggle-nav" class="btn responsive-grid centred show-phone"><i class="icon-list-2"></i></label>
-        <input type="checkbox" class="toggle-nav visuallyhidden" id="toggle-nav" checked="checked">
-        <nav>
-            <ul>
-                <li><a data-icon="! " href="#">Home</a></li>
-                <li><a data-icon="# " href="#">About</a></li>
-                <li><a data-icon="d " href="#">Download</a></li>
-                <li><a data-icon="B " href="#">FAQ</a></li>
-                <li><a data-icon="5 " href="#">Contact</a></li>
-            </ul>
-        </nav>
-    </header>
-    <article role="main" id="content">
-        <p>Article content goes here</p>
-    </article>
-    <footer>
-        <nav>
-            <ul>
-                <li><a data-icon="" href="#">Link 1</a></li>
-                <li><a data-icon="" href="#">Link 2</a></li>
-                <li><a data-icon="" href="#">Link 3</a></li>
-                <li><a data-icon="" href="#">Link 4</a></li>
-            </ul>
-        </nav>
-    </footer>
-</div>
+<body>
 
 
-<script src="js/components/jquery/jquery.min.js"></script>
-<script src="js/main.js"></script>
+<div class="jumbotron">
+                <h1>'Allo, 'Allo!</h1>
+                <p class="lead">Always a pleasure scaffolding your apps.</p>
+                <p><a href="#">Splendid!</a></p>
+            </div>
 
-<!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
-<!--            <script>
-var _gaq=[['_setAccount','UA-XXXXX-X'],['_trackPageview']];
-(function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
-    g.src=('https:'==location.protocol?'//ssl':'//www')+'.google-analytics.com/ga.js';
-    s.parentNode.insertBefore(g,s)}(document,'script'));
-</script> -->
+            <div class="row marketing">
+                <div class="col-lg-6">
+                    <h4>HTML5 Boilerplate</h4>
+                    <p>HTML5 Boilerplate is a professional front-end template for building fast, robust, and adaptable web apps or sites.</p>
+
+
+                    <% if (includeModernizr) { %><h4>Modernizr</h4>
+                    <p>Modernizr is an open-source JavaScript library that helps you build the next generation of HTML5 and CSS3-powered websites.</p>
+                    <% } %>
+
+                    <% if (includeRequireJS) { %><h4>RequireJS</h4>
+                    <p>RequireJS is a JavaScript file and module loader. It is optimized for in-browser use, but it can be used in other JavaScript environments, like Rhino and Node.</p>
+                    <% } %>
+                </div>
+            </div>
+
+            <div class="footer">
+                <p>♥ from the Yeoman team</p>
+            </div>
+
+        </div>
+
+        <div class="hero-unit">
+          <h1>'Allo, 'Allo!</h1>
+          <p>You now have</p>
+          <ul>
+            <li>HTML5 Boilerplate</li>
+            <% if (includeModernizr) { %><li>Modernizr</li><% } %>
+            <% if (includeRequireJS) { %><li>RequireJS</li><% } %>
+          </ul>
+        </div>
+
+
+        <!-- build:js scripts/vendor.js -->
+        <!-- bower:js -->
+        <script src="public/bower_components/jquery/jquery.min.js"></script>
+        <!-- endbower -->
+        <!-- endbuild -->
+
+
+        <script src="public/scripts/main.js"></script>
+
+        <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
+        <script>
+            (function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=
+            function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;
+            e=o.createElement(i);r=o.getElementsByTagName(i)[0];
+            e.src='//www.google-analytics.com/analytics.js';
+            r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));
+            ga('create','UA-XXXXX-X');ga('send','pageview');
+        </script>
+
+</body>
+</html>
