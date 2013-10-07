@@ -1,6 +1,6 @@
-# generator-mamma [![Build Status](https://secure.travis-ci.org/mikeislearning/generator-mamma.png?branch=master)](https://travis-ci.org/mikeislearning/generator-mamma)
+# Generator-Mamma
 
-A generator for [Yeoman](http://yeoman.io).
+The mother of all generators for [Yeoman](http://yeoman.io).
 
 
 ## Getting Started
