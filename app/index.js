@@ -142,11 +142,10 @@ MammaGenerator.prototype.projectfiles = function projectfiles() {
 
 MammaGenerator.prototype.app = function app() {
   this.mkdir('app');
-  this.mkdir('app/templates');
 
   this.template("_index.html", "app/index.html");
   this.template("_main.js", "app/public/scripts/main.js");
-  this.template("_main.js", "app/public/styles/main.scss");
+  this.template("_main.scss", "app/public/styles/main.scss");
   this.mkdir('app/public/images');
   this.copy('_package.json', 'package.json');
 

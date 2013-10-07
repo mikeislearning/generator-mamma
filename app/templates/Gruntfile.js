@@ -19,7 +19,7 @@ module.exports = function (grunt) {
             app: 'app',
             dist: 'dist'
         },
-        watch:
+        watch: {
             compass: {
                 files: ['<%%= yeoman.app %>/styles/{,*/}*.{scss,sass}'],
                 tasks: ['compass:server', 'autoprefixer']
