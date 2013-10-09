@@ -1,11 +1,18 @@
 {
-  "name": "<%= name %>",
+  "name": "<%= _.slugify(appname) %>",
   "version": "0.0.0",
-  "dependencies": {},
+  "dependencies": {
+    "express": "3.4.0",<% if (db === 'mongoose') { %>
+    "mongoose": "3.6.15",<% } else if (db === 'sequelize') { %>
+    "sequelize": "~2.0.0-beta.0",<% }  %>
+    "consolidate": "0.9.1",
+    "underscore": "1.5.2"
+  },
   "devDependencies": {
     "grunt": "~0.4.1",
     "grunt-contrib-copy": "~0.4.1",
-    "grunt-contrib-concat": "~0.3.0",
+    "grunt-contrib-concat": "~0.3.0",<% if (coffee) { %>
+    "grunt-contrib-coffee": "~0.7.0",<% } %>
     "grunt-contrib-uglify": "~0.2.0",
     "grunt-contrib-compass": "~0.5.0",
     "grunt-contrib-jshint": "~0.6.3",
@@ -26,6 +33,7 @@
     "grunt-modernizr": "~0.3.0",<% } %>
     "grunt-svgmin": "~0.2.0",
     "grunt-concurrent": "~0.3.0",
+    "grunt-express-server":"~0.4.4",
     "load-grunt-tasks": "~0.1.0",
     "time-grunt": "~0.1.1"
   },

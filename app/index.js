@@ -1,14 +1,16 @@
 'use strict';
 var util = require('util');
 var path = require('path');
+var spawn = require('child_process').spawn;
 var yeoman = require('yeoman-generator');
 
 
-var MammaGenerator = module.exports = function MammaGenerator(args, options, config) {
+var MergeGenerator = module.exports = function MergeGenerator(args, options, config) {
   yeoman.generators.Base.apply(this, arguments);
 
   // setup the test-framework property, Gruntfile template will need this
   this.testFramework = options['test-framework'] || 'mocha';
+  this.coffee = options.coffee;
 
   // for hooks to resolve on mocha by default
   if (!options['test-framework']) {
@@ -18,53 +20,39 @@ var MammaGenerator = module.exports = function MammaGenerator(args, options, con
   // resolved to mocha by default (could be switched to jasmine for instance)
   this.hookFor('test-framework', { as: 'app' });
 
+  this.mainCoffeeFile = 'console.log "\'Allo from CoffeeScript!"';
+
   this.on('end', function () {
     this.installDependencies({
       skipInstall: options['skip-install'],
       skipMessage: options['skip-install-message']
-       });
+    });
   });
 
   this.pkg = JSON.parse(this.readFileAsString(path.join(__dirname, '../package.json')));
 };
 
-util.inherits(MammaGenerator, yeoman.generators.Base);
+util.inherits(MergeGenerator, yeoman.generators.Base);
 
-MammaGenerator.prototype.askFor = function askFor() {
+MergeGenerator.prototype.askFor = function askFor() {
   var cb = this.async();
 
-  // have Yeoman greet the user.
-  console.log(this.yeoman);
-  console.log('This is Yo Mamma, the Mother of All Generators.\n');
-  /**
-   * Determine the questions you want to ask the user
-   * type - confirm, checkbox, list (otherwise it's just plain text)
-   * name - what you want to call it, and where the answer variable will be stored
-   * message - what the user will see
-   * default - true, false
-   */
-  var prompts = [
-  {
-    name: "name",
-    message: "What is the name of your project?"
-  },
-  {
-    name: "description",
-    message: 'What is your app about?',
-  },
-  {
-    name: "keywords",
-    message: 'Please list some keywords for your site, separated by commas:',
-  },
-  {
-    name: "authors",
-    message: 'Who are they authors of this app?',
-  },
-  {
+  // welcome message
+  if (!this.options['skip-welcome-message']) {
+    console.log(this.yeoman);
+      console.log('This is Yo Mamma, the Mother of All Generators.\n');
+  console.log('I come standard with HTML5 Boilerplate, jQuery, Compass, Node, and Express.');
+  }
+
+  var prompts = [{
     type: 'checkbox',
     name: 'features',
     message: 'What more would you like?',
     choices: [{
+      name: 'Bootstrap for Sass',
+      value: 'compassBootstrap',
+      checked: true
+    }, {
       name: 'RequireJS',
       value: 'includeRequireJS',
       checked: true
@@ -73,87 +61,115 @@ MammaGenerator.prototype.askFor = function askFor() {
       value: 'includeModernizr',
       checked: true
     }]
-  }
-  ];
-  /**
-   * Makes the prompts values accessible to the larger template
-   *
-   */
-  this.prompt(prompts, function (props) {
-    this.name = props.name;
-    this.description = props.description;
-    this.keywords = props.keywords;
-    this.authors = props.authors;
+  },
+  {
+    type: 'list',
+    name: 'db',
+    message: 'Choose the database module you would like to use for your mvc app',
+    default: 'mongoose',
+    choices: ['mongoose', 'sequelize'],
+  }];
 
-    var features = props.features;
+  this.prompt(prompts, function (answers) {
+    var features = answers.features;
+    this.htmlEngine = answers.htmlEngine;
+    this.db = answers.db || null;
 
     function hasFeature(feat) { return features.indexOf(feat) !== -1; }
 
     // manually deal with the response, get back and store the results.
     // we change a bit this way of doing to automatically do this in the self.prompt() method.
+    this.compassBootstrap = hasFeature('compassBootstrap');
     this.includeRequireJS = hasFeature('includeRequireJS');
     this.includeModernizr = hasFeature('includeModernizr');
-
 
     cb();
   }.bind(this));
 };
 
-
-/**
- * This function templates out the app
- * this.copy copies the file directly, and are relative to the main file path
- * this.template will programmatically utilize the template data to customize your app, and are relative to the path of the template directory
- *
- */
-
-MammaGenerator.prototype.gruntfile = function gruntfile() {
-  this.template('Gruntfile.js');
-};
-
-MammaGenerator.prototype.compass = function compass() {
-  this.copy('config.rb');
-};
-
-MammaGenerator.prototype.packageJSON = function packageJSON() {
+MergeGenerator.prototype.packageJSON = function packageJSON() {
   this.template('_package.json', 'package.json');
 };
 
-MammaGenerator.prototype.bower = function bower() {
+MergeGenerator.prototype.gruntfile = function gruntfile() {
+  this.template('Gruntfile.js');
+};
+
+MergeGenerator.prototype.git = function git() {
+  this.copy('gitignore', '.gitignore');
+  this.copy('gitattributes', '.gitattributes');
+};
+
+MergeGenerator.prototype.bower = function bower() {
   this.copy('bowerrc', '.bowerrc');
   this.copy('_bower.json', 'bower.json');
 };
 
-MammaGenerator.prototype.h5bp = function h5bp() {
-  this.copy('404.html', 'app/404.html');
+MergeGenerator.prototype.jshint = function jshint() {
+  this.copy('jshintrc', '.jshintrc');
+};
+
+MergeGenerator.prototype.editorConfig = function editorConfig() {
+  this.copy('editorconfig', '.editorconfig');
+};
+
+MergeGenerator.prototype.h5bp = function h5bp() {
+  this.copy('favicon.ico', 'app/favicon.ico');
+  this.copy('404.html', 'app/views/404.html');
   this.copy('robots.txt', 'app/robots.txt');
   this.copy('htaccess', 'app/.htaccess');
 };
 
-MammaGenerator.prototype.filters = function filters(){
-  this.copy('../content/profanity/en.json','app/content/profanity/en.json');
-}
-
-
-MammaGenerator.prototype.projectfiles = function projectfiles() {
-  this.copy('editorconfig', '.editorconfig');
-  this.copy('jshintrc', '.jshintrc');
+MergeGenerator.prototype.mainStylesheet = function mainStylesheet() {
+  if (this.compassBootstrap) {
+    this.copy('main.scss', 'app/styles/main.scss');
+  } else {
+    this.copy('main.css', 'app/styles/main.css');
+  }
 };
 
-MammaGenerator.prototype.writeIndex = function writeIndex() {
+MergeGenerator.prototype.writeIndex = function writeIndex() {
 
-  this.indexFile = this.readFileAsString(path.join(this.sourceRoot(), 'index.html'));
+  this.indexFile = this.readFileAsString(path.join(this.sourceRoot(), 'views/index.html'));
   this.indexFile = this.engine(this.indexFile, this);
 
   if (!this.includeRequireJS) {
     this.indexFile = this.appendScripts(this.indexFile, 'scripts/main.js', [
       'scripts/main.js'
     ]);
+
+    if (this.coffee) {
+      this.indexFile = this.appendFiles({
+        html: this.indexFile,
+        fileType: 'js',
+        optimizedPath: 'scripts/coffee.js',
+        sourceFileList: ['scripts/hello.js'],
+        searchPath: '.tmp'
+      });
     }
-}
+  }
+
+  if (this.compassBootstrap && !this.includeRequireJS) {
+    // wire Twitter Bootstrap plugins
+    this.indexFile = this.appendScripts(this.indexFile, 'scripts/plugins.js', [
+      'bower_components/sass-bootstrap/js/affix.js',
+      'bower_components/sass-bootstrap/js/alert.js',
+      'bower_components/sass-bootstrap/js/dropdown.js',
+      'bower_components/sass-bootstrap/js/tooltip.js',
+      'bower_components/sass-bootstrap/js/modal.js',
+      'bower_components/sass-bootstrap/js/transition.js',
+      'bower_components/sass-bootstrap/js/button.js',
+      'bower_components/sass-bootstrap/js/popover.js',
+      'bower_components/sass-bootstrap/js/carousel.js',
+      'bower_components/sass-bootstrap/js/scrollspy.js',
+      'bower_components/sass-bootstrap/js/collapse.js',
+      'bower_components/sass-bootstrap/js/tab.js'
+    ]);
+  }
+};
 
 // TODO(mklabs): to be put in a subgenerator like rjs:app
-MammaGenerator.prototype.requirejs = function requirejs() {
+MergeGenerator.prototype.requirejs = function requirejs() {
   if (!this.includeRequireJS) {
     return;
   }
@@ -174,13 +190,37 @@ MammaGenerator.prototype.requirejs = function requirejs() {
   this.template('require_main.js', 'app/scripts/main.js');
 };
 
-MammaGenerator.prototype.app = function app() {
+MergeGenerator.prototype.mvcSetup = function mvcSetup() {
+
+    //this.sourceRoot(path.join(__dirname, 'templates', 'mvc'));
+    this.mkdir('app/controllers');
+    this.mkdir('app/views');
+    this.mkdir('app/models');
+    this.mkdir('app/routes');
+
+
+    this.write('app/views/index.html', this.indexFile);
+    //this.template('_index.html', 'app/views/index.' + ext);
+
+    this.template('app.js','app/app.js');
+    this.template('controllers/controller.js', 'app/controllers/index.js');
+    this.template('models/model.js', 'app/models/index.js');
+    this.template('routes.js','app/routes/index.js');
+
+};
+
+MergeGenerator.prototype.app = function app() {
   this.mkdir('app');
+  this.mkdir('app/scripts');
+  this.mkdir('app/styles');
+  this.mkdir('app/images');
 
-  this.template("_index.html", "app/index.html");
-  this.template("_main.js", "app/public/scripts/main.js");
-  this.template("_main.scss", "app/public/styles/main.scss");
-  this.mkdir('app/public/images');
-  this.copy('_package.json', 'package.json');
 
+  if (this.coffee) {
+    this.write('app/scripts/hello.coffee', this.mainCoffeeFile);
+  }
+
+  if (!this.includeRequireJS) {
+    this.write('app/scripts/main.js', 'console.log(\'\\\'Allo \\\'Allo!\');');
+  }
 };
