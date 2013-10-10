@@ -5,14 +5,14 @@ var path    = require('path');
 var helpers = require('yeoman-generator').test;
 
 
-describe('mamma generator', function () {
+describe('meanstack generator', function () {
   beforeEach(function (done) {
     helpers.testDirectory(path.join(__dirname, 'temp'), function (err) {
       if (err) {
         return done(err);
       }
 
-      this.app = helpers.createGenerator('mamma:app', [
+      this.app = helpers.createGenerator('meanstack:app', [
         '../../app'
       ]);
       done();
@@ -27,7 +27,7 @@ describe('mamma generator', function () {
     ];
 
     helpers.mockPrompt(this.app, {
-      'someOption': true
+      'someOption': 'Y'
     });
     this.app.options['skip-install'] = true;
     this.app.run({}, function () {
