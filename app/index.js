@@ -113,7 +113,7 @@ MammaGenerator.prototype.app = function app() {
     this.template('app/index.html','app/index.html');
     this.mkdir('app/scripts');
     if(this.includeRequireJS){
-    this.copy('app/scripts/require_config.js','app/scripts/require_configs.js');
+    this.copy('app/scripts/require_config.js','app/scripts/require_config.js');
     }
     this.mkdir('test');
     this.mkdir('test/spec');
@@ -128,14 +128,14 @@ MammaGenerator.prototype.projectfiles = function projectfiles() {
     this.copy('_jshintrc', '.jshintrc');
     this.copy('_gitattributes', '.gitattributes');
 
-    // Package
-    this.template('_package.json', 'package.json');
-
     // Front
     this.template('_bower.json', 'bower.json');
     this.template('_Gruntfile.js', 'Gruntfile.js');
     this.copy('_karma-e2e.conf.js', 'karma-e2e.conf.js');
     this.copy('_karma.conf.js', 'karma.conf.js');
+
+    // Package
+    this.template('_package.json', 'package.json');
 
     // Express
     this.copy('_app.js', 'app.js');

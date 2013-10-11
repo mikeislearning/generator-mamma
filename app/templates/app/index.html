@@ -47,9 +47,9 @@
             <% } if(includeRequireJS) { %>
             <li> RequireJS </li>
             <% } if(compassBootstrap) { %>
-            <li> Compass Boostrap </li>
+            <li> Compass Bootstrap </li>
             <% } %>
-
+        </ul>
         <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
         <script>
           var _gaq=[['_setAccount','UA-XXXXX-X'],['_trackPageview']];
@@ -61,7 +61,7 @@
         <% if (jsLibrary === 'angular' ) { %>
         <script src="bower_components/angular/angular.js"></script>
         <% } else { %>
-        <script src="bower_components/jquery/jquery.min.js"></script>
+        <script src="bower_components/jquery/jquery.js"></script>
         <% } %>
         <!-- build:js scripts/modules.js -->
         <% if (jsLibrary === 'angular' ) { %>
@@ -71,13 +71,14 @@
         <% } %>
         <!-- endbuild -->
 
-        <!-- build:js({.tmp,app}) scripts/scripts.js -->
         <% if (jsLibrary === 'angular' ) { %>
+        <!-- build:js({.tmp,app}) scripts/scripts.js -->
         <script src="scripts/app.js"></script>
         <script src="scripts/controllers/main.js"></script>
         <% } %>
         <!-- PLACE YOUR SCRIPT FILES HERE -->
         <!-- endbuild -->
+
         <% if(includeRequireJS) { %>
         <!-- build:js scripts/require_config.js -->
         <script data-main="scripts/require_config" src="bower_components/requirejs/require.js"></script>
