@@ -15,4 +15,5 @@ module.exports = function (app) {
         app.use(app.router);
         app.use(express.static(path.join(app.directory, 'dist')));
     });
+     process.env.NODE_ENV = 'production';
 };

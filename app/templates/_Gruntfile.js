@@ -31,7 +31,7 @@ grunt.loadNpmTasks('grunt-express');
     watch: {
       <% if (coffee) {%>
       coffee: {
-        files: ['<%%= yeoman.app %>/public/scripts/{,*/}*.coffee'],
+        files: ['assets/scripts/{,*/}*.coffee'],
         tasks: ['coffee:dist']
       },
       coffeeTest: {
@@ -40,46 +40,46 @@ grunt.loadNpmTasks('grunt-express');
       },
       <% } %>
       compass: {
-                files: ['<%%= yeoman.app %>/public/styles/{,*/}*.{scss,sass}'],
-                tasks: ['compass:server', 'autoprefixer']
+                files: ['assets/sass/{,*/}*.{scss,sass}'],
+                tasks: ['compass:dev', 'autoprefixer']
             },
-      styles: {
-                files: ['<%%= yeoman.app %>/public/styles/{,*/}*.css'],
-                tasks: ['copy:styles', 'autoprefixer']
-            },
+      // styles: {
+      //           files: ['.tmp/styles/{,*/}*.css'],
+      //           tasks: ['copy:styles', 'autoprefixer']
+      //       },
       livereload: {
         options: {
           livereload: LIVERELOAD_PORT
         },
         files: [
           '<%%= yeoman.app %>/{,*/}*.html',
-          '{.tmp,<%%= yeoman.app %>}/public/styles/{,*/}*.css',
-          '{.tmp,<%%= yeoman.app %>}/public/scripts/{,*/}*.js',
-          '<%%= yeoman.app %>/public/images/{,*/}*.{png,jpg,jpeg,gif,webp,svg}'
+          '{.tmp,assets}/styles/{,*/}*.css',
+          '{.tmp,assets}/scripts/{,*/}*.js',
+          'assets/images/{,*/}*.{png,jpg,jpeg,gif,webp,svg}'
         ]
       }
     },
     compass: {
             options: {
-                sassDir: '<%%= yeoman.app %>/public/styles',
+                sassDir: 'assets/sass',
                 cssDir: '.tmp/styles',
                 generatedImagesDir: '.tmp/images/generated',
-                imagesDir: '<%%= yeoman.app %>/public/images',
-                javascriptsDir: '<%%= yeoman.app %>/public/scripts',
-                fontsDir: '<%%= yeoman.app %>/public/styles/fonts',
-                importPath: '<%%= yeoman.app %>/public/bower_components',
-                httpImagesPath: '<%%= yeoman.app %>/public/images',
-                httpGeneratedImagesPath: '<%%= yeoman.app %>/public/images/generated',
-                httpFontsPath: '<%%= yeoman.app %>/public/styles/fonts',
+                imagesDir: 'assets/images',
+                javascriptsDir: 'assets/scripts',
+                fontsDir: 'assets/styles/fonts',
+                importPath: 'assets/bower_components',
+                httpImagesPath: 'assets/images',
+                httpGeneratedImagesPath: 'assets/images/generated',
+                httpFontsPath: 'assets/styles/fonts',
                 relativeAssets: false,
                 assetCacheBuster: false
             },
             dist: {
                 options: {
-                    generatedImagesDir: '<%%= yeoman.dist %>/public/images/generated'
+                    generatedImagesDir: '<%%= yeoman.dist %>/images/generated'
                 }
             },
-            server: {
+            dev: {
                 options: {
                     debugInfo: false
                 }
@@ -101,30 +101,30 @@ grunt.loadNpmTasks('grunt-express');
     express: {
       options: {
         port: 3000,
-        hostname: '*'
+        hostname: 'localhost'
       },
-      livereload: {
+      dev: {
         options: {
           livereload: true,
-          server: path.resolve('app.js'),
+          dev: path.resolve('app.js'),
           bases: [path.resolve('./.tmp'), path.resolve(__dirname, yeomanConfig.app)]
         }
       },
       test: {
         options: {
-          server: path.resolve('app.js'),
+          dev: path.resolve('app.js'),
           bases: [path.resolve('./.tmp'), path.resolve(__dirname, 'test')]
         }
       },
       dist: {
         options: {
-          server: path.resolve('app.js'),
+          dev: path.resolve('app.js'),
           bases: path.resolve(__dirname, yeomanConfig.dist)
         }
       }
     },
     open: {
-      server: {
+      dev: {
         url: 'http://localhost:3000'
       }
     },
@@ -139,7 +139,7 @@ grunt.loadNpmTasks('grunt-express');
           ]
         }]
       },
-      server: '.tmp'
+      dev: '.tmp'
     },
     jshint: {
       options: {
@@ -147,7 +147,7 @@ grunt.loadNpmTasks('grunt-express');
       },
       all: [
         'Gruntfile.js',
-        '<%%= yeoman.app %>/public/scripts/{,*/}*.js'
+        'assets/scripts/{,*/}*.js'
       ]
     },
     <% if(coffee) {%>
@@ -155,7 +155,7 @@ grunt.loadNpmTasks('grunt-express');
       dist: {
         files: [{
           expand: true,
-          cwd: '<%%= yeoman.app %>/public/scripts',
+          cwd: 'assets/scripts',
           src: '{,*/}*.coffee',
           dest: '.tmp/scripts',
           ext: '.js'
@@ -196,7 +196,7 @@ grunt.loadNpmTasks('grunt-express');
             // Options: https://github.com/jrburke/r.js/blob/master/build/example.build.js
             options: {
                 // `name` and `out` is set by grunt-usemin
-                baseUrl: '<%%= yeoman.app %>/public/scripts',
+                baseUrl: 'assets/scripts',
                 optimize: 'none',
                 // TODO: Figure out how to make sourcemaps work with grunt-usemin
                 // https://github.com/yeoman/grunt-usemin/issues/30
@@ -219,12 +219,12 @@ grunt.loadNpmTasks('grunt-express');
     <% } %>
     <% if (includeModernizr) { %>
     modernizr: {
-        devFile: '<%%= yeoman.app %>/public/bower_components/modernizr/modernizr.js',
-        outputFile: '<%%= yeoman.dist %>/public/bower_components/modernizr/modernizr.js',
+        devFile: 'assets/bower_components/modernizr/modernizr.js',
+        outputFile: '<%%= yeoman.dist %>/scripts/modernizr/modernizr.js',
         files: [
-            '<%%= yeoman.dist %>/public/scripts/{,*/}*.js',
-            '<%%= yeoman.dist %>/public/styles/{,*/}*.css',
-            '!<%%= yeoman.dist %>/public/scripts/vendor/*'
+            '<%%= yeoman.dist %>/scripts/{,*/}*.js',
+            '<%%= yeoman.dist %>/styles/{,*/}*.css',
+            '!<%%= yeoman.dist %>/scripts/vendor/*'
         ],
         uglify: true
     }<% } %>
@@ -234,7 +234,7 @@ grunt.loadNpmTasks('grunt-express');
             exclude: ['modernizr']
         },
         all: {
-            rjsConfig: '<%%= yeoman.app %>/public/scripts/main.js'
+            rjsConfig: 'assets/scripts/require_config.js'
         }
     },<% } %>
     useminPrepare: {
@@ -254,9 +254,9 @@ grunt.loadNpmTasks('grunt-express');
       dist: {
         files: [{
           expand: true,
-          cwd: '<%%= yeoman.app %>/public/images',
+          cwd: 'assets/images',
           src: '{,*/}*.{png,jpg,jpeg}',
-          dest: '<%%= yeoman.dist %>/public/images'
+          dest: '<%%= yeoman.dist %>/images'
         }]
       }
     },
@@ -268,7 +268,7 @@ grunt.loadNpmTasks('grunt-express');
       //   files: {
       //     '<%%= yeoman.dist %>/styles/main.css': [
       //       '.tmp/styles/{,*/}*.css',
-      //       '<%%= yeoman.app %>/public/styles/{,*/}*.css'
+      //       'assets/styles/{,*/}*.css'
       //     ]
       //   }
       // }
@@ -298,9 +298,9 @@ grunt.loadNpmTasks('grunt-express');
           dist: {
               files: [{
                   expand: true,
-                  cwd: '<%%= yeoman.app %>/public/images',
+                  cwd: 'assets/images',
                   src: '{,*/}*.svg',
-                  dest: '<%%= yeoman.dist %>/public/images'
+                  dest: '<%%= yeoman.dist %>/images'
               }]
           }
     },
@@ -317,37 +317,68 @@ grunt.loadNpmTasks('grunt-express');
                         '.htaccess',
                         'images/{,*/}*.{webp,gif}',
                         'styles/fonts/{,*/}*.*'<% if (compassBootstrap) { %>,
-                        'bower_components/sass-bootstrap/fonts/*.*'<% } %>
+                        'assets/bower_components/sass-bootstrap/fonts/*.*'<% } %>
                     ]
                 }]
             },
             styles: {
                 expand: true,
                 dot: true,
-                cwd: '<%%= yeoman.app %>/styles',
-                dest: '.tmp/styles/',
+                cwd: '.tmp/styles',
+                dest: '<%%= yeoman.dist %>/styles/',
                 src: '{,*/}*.css'
-            }
+            },
+            bower: {
+                expand: true,
+                dot: true,
+                cwd: 'assets/bower_components',
+                dest: '.tmp/scripts/',
+                src: '{,*/}*.js'
+            },
+            scripts: {
+                expand: true,
+                dot: true,
+                cwd: 'assets/scripts',
+                dest: '.tmp/scripts/',
+                src: '{,*/}*.js'
+            },
+            images: {
+                expand: true,
+                dot: true,
+                cwd: 'assets/images',
+                dest: '.tmp/images/',
+                src: '{,*/}*.js'
+            },
+            allScripts: {
+                expand: true,
+                dot: true,
+                cwd: '.tmp/scripts/',
+                dest: '<%%= yeoman.dist %>/scripts/',
+                src: '{,*/}*.js'
+            },
         },
     concurrent: {
-      server: [
-         'compass',<% if (coffee) { %>
-                'coffee:dist',<% } %>
-                'copy:styles'
+      dev: [
+          'compass',<% if (coffee) { %>
+          'coffee:dist',<% } %>
+          'copy:bower',
+          'copy:scripts',
+          'copy:images'
       ],
       test: [
         <% if (coffee) { %>
-                'coffee',<% } %>
-                'copy:styles'
-      ],
+          'coffee',<% } %>
+          'copy:styles'
+],
       dist: [
         <% if (coffee) { %>
-                'coffee',<% } %>
-                'compass',
-                'copy:styles',
-                'imagemin',
-                'svgmin',
-                'htmlmin'
+          'coffee',<% } %>
+          'compass',
+          'copy:styles',
+          'copy:allScripts',
+          'imagemin',
+          'svgmin',
+          'htmlmin'
       ]
     },
     karma: {
@@ -384,22 +415,28 @@ grunt.loadNpmTasks('grunt-express');
     }
   });
 
-  grunt.registerTask('server', function (target) {
-    if (target === 'dist') {
-      return grunt.task.run(['build', 'open', 'express:dist', 'express-keepalive']);
-    }
-
+  grunt.registerTask('dev', function () {
     grunt.task.run([
-      'clean:server',
-      'concurrent:server',
-      'express:livereload',
+      'clean:dev',
+      'concurrent:dev',
+      'compass:dev',
+      'express:dev',
       'open',
       'watch'
     ]);
   });
 
+  grunt.registerTask('dist', function(){
+     grunt.task.run([
+      'build',
+      'express:dist',
+      'open',
+      'express-keepalive'
+     ]);
+  });
+
   grunt.registerTask('test', [
-    'clean:server',
+    'clean:dev',
     'concurrent:test',
     'express:test',
     'karma'

@@ -55,9 +55,9 @@ MammaGenerator.prototype.askFor = function askFor() {
     name: 'features',
     message: 'What more would you like?',
     choices: [{
-      name: 'Bootstrap for Sass',
+      name: 'Bootstrap for Sass (requires jQuery)',
       value: 'compassBootstrap',
-      checked: true
+      checked: false
     }, {
       name: 'RequireJS',
       value: 'includeRequireJS',
@@ -91,26 +91,27 @@ MammaGenerator.prototype.app = function app() {
     this.mkdir('config');
     this.mkdir('config/environments');
     this.mkdir('routes');
+    this.mkdir('assets/scripts');
+    this.mkdir('assets/sass');
+    this.mkdir('assets/images');
 
     this.directory('routes');
     this.directory('config');
+    this.directory('assets');
 
     // Frontend
     this.mkdir('app');
     this.mkdir('app/views');
     this.mkdir('app/controllers');
     this.mkdir('app/models');
-    this.mkdir('app/public/styles');
-    this.mkdir('app/public/scripts');
-    this.mkdir('app/public/sass');
-    this.mkdir('app/public/images');
+
     this.directory('app');
     this.template('app/index.html','app/index.html');
     if(this.includeRequireJS){
-    this.template('app/public/scripts/require_config.js','app/public/scripts/require_config.js');
+    this.template('assets/scripts/require_config.js','assets/scripts/require_config.js');
     }
-    this.template('app/public/scripts/app.js','app/public/scripts/app.js');
-    this.template('app/public/scripts/controllers/main.js','app/public/scripts/controllers/main.js');
+    this.template('assets/scripts/app.js','assets/scripts/app.js');
+    this.template('assets/scripts/controllers/main.js','assets/scripts/controllers/main.js');
 
     this.mkdir('test');
     this.mkdir('test/spec');
