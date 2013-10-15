@@ -1,5 +1,7 @@
 'use strict';
 
+<% if (jsLibrary === "angular") { %>
+
 angular.module('<%= _.camelize(appname)%>App')
   .controller('MainCtrl', function ($scope) {
     $scope.awesomeThings = [
@@ -8,3 +10,5 @@ angular.module('<%= _.camelize(appname)%>App')
       'Karma'
     ];
   });
+
+<% } %>

@@ -8,7 +8,7 @@ var MammaGenerator = module.exports = function MammaGenerator(args, options, con
     yeoman.generators.Base.apply(this, arguments);
 
     // this.testFramework = options['test-framework'] || 'mocha';
-    // this.coffee = options.coffee;
+    this.coffee = options.coffee;
 
     // // for hooks to resolve on mocha by default
     // if (!options['test-framework']) {
@@ -88,33 +88,30 @@ MammaGenerator.prototype.askFor = function askFor() {
 };
 
 MammaGenerator.prototype.app = function app() {
-    this.mkdir('public');
-    this.mkdir('public/images');
-    this.mkdir('public/javascripts');
-    this.mkdir('public/stylesheets');
     this.mkdir('config');
     this.mkdir('config/environments');
     this.mkdir('routes');
-    this.mkdir('views');
 
-    this.directory('public');
     this.directory('routes');
-    this.directory('views');
     this.directory('config');
 
     // Frontend
     this.mkdir('app');
-    if(this.jsLibrary === 'angular' ){
-    this.mkdir('app/scripts');
-    }
-    this.mkdir('app/styles');
     this.mkdir('app/views');
+    this.mkdir('app/controllers');
+    this.mkdir('app/models');
+    this.mkdir('app/public/styles');
+    this.mkdir('app/public/scripts');
+    this.mkdir('app/public/sass');
+    this.mkdir('app/public/images');
     this.directory('app');
     this.template('app/index.html','app/index.html');
-    this.mkdir('app/scripts');
     if(this.includeRequireJS){
-    this.copy('app/scripts/require_config.js','app/scripts/require_config.js');
+    this.template('app/public/scripts/require_config.js','app/public/scripts/require_config.js');
     }
+    this.template('app/public/scripts/app.js','app/public/scripts/app.js');
+    this.template('app/public/scripts/controllers/main.js','app/public/scripts/controllers/main.js');
+
     this.mkdir('test');
     this.mkdir('test/spec');
     this.mkdir('test/spec/controllers');
@@ -130,12 +127,10 @@ MammaGenerator.prototype.projectfiles = function projectfiles() {
 
     // Front
     this.template('_bower.json', 'bower.json');
+    this.template('_package.json', 'package.json');
     this.template('_Gruntfile.js', 'Gruntfile.js');
     this.copy('_karma-e2e.conf.js', 'karma-e2e.conf.js');
     this.copy('_karma.conf.js', 'karma.conf.js');
-
-    // Package
-    this.template('_package.json', 'package.json');
 
     // Express
     this.copy('_app.js', 'app.js');

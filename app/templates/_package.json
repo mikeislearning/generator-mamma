@@ -10,8 +10,7 @@
     },
     "dependencies": {
         "express": "3.4.0",
-        "mongoose": "3.6.15",
-        "hbs": "*"
+        "mongoose": "3.6.15"
     },
     "devDependencies": {
         "grunt": "~0.4.1",
@@ -27,6 +26,7 @@
         "grunt-contrib-clean": "~0.4.1",
         "grunt-contrib-htmlmin": "~0.1.3",
         "grunt-contrib-imagemin": "~0.1.4",
+        "grunt-svgmin":"*",
         "grunt-contrib-watch": "~0.4.0",
          <% if (includeRequireJS) { %>
         "grunt-bower-requirejs": "~0.7.0",

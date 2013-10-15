@@ -1,6 +1,12 @@
 require.config({
     paths: {
-        jquery: '../bower_components/jquery/jquery'<% if (compassBootstrap) { %>,
+        <% if(jsLibrary==="jQuery") { %>
+        jquery: '../bower_components/jquery/jquery',
+        handlebars: '../bower_components/handlebars/handlebars'
+        <% } else { %>
+        angular: '../bower_components/angular/angular'
+        <% } %>
+        <% if (compassBootstrap) { %>,
         bootstrapAffix: '../bower_components/sass-bootstrap/js/affix',
         bootstrapAlert: '../bower_components/sass-bootstrap/js/alert',
         bootstrapButton: '../bower_components/sass-bootstrap/js/button',
@@ -13,8 +19,18 @@ require.config({
         bootstrapTab: '../bower_components/sass-bootstrap/js/tab',
         bootstrapTooltip: '../bower_components/sass-bootstrap/js/tooltip',
         bootstrapTransition: '../bower_components/sass-bootstrap/js/transition'<% } %>
-    }<% if (compassBootstrap) { %>,
+    },
+
     shim: {
+<% if (jsLibrary==="jQuery") { %>
+
+        'handlebars': {
+            exports: 'Handlebars'
+        }
+    <% } %>
+
+    <% if (compassBootstrap) { %>,
+
         bootstrapAffix: {
             deps: ['jquery']
         },
@@ -51,12 +67,28 @@ require.config({
         bootstrapTransition: {
             deps: ['jquery']
         }
-    }<% } %>
+    }
+<% } %>
+
 });
 
-require(['app', 'jquery'], function (app, $) {
+//add bootstrap requirements as you wish!
+
+require(['app', <% if (jsLibrary==="jQuery") {%>
+ 'jquery','handlebars'],
+  function (app, $, handlebars) {
     'use strict';
     // use app here
     console.log(app);
-    console.log('Running jQuery %s', $().jquery);
 });
+ <% } else { %>
+    'angular'],
+     function (app, angular) {
+    'use strict';
+        // use app here
+        console.log(app);
+    });
+   <% } %>
+
+
+

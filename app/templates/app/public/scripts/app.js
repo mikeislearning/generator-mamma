@@ -1,5 +1,7 @@
 'use strict';
 
+<% if (jsLibrary === "angular") { %>
+
 angular.module('<%= _.camelize(appname)%>App', [])
   .config(function ($routeProvider) {
     $routeProvider
@@ -11,3 +13,5 @@ angular.module('<%= _.camelize(appname)%>App', [])
         redirectTo: '/'
       });
   });
+
+<% } %>
