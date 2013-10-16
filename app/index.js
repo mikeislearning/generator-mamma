@@ -71,7 +71,7 @@ MammaGenerator.prototype.askFor = function askFor() {
     {
         type: 'confirm',
         name: 'coffee',
-        message: 'Are you the kind of bad ass mofo that wantss to work in Coffeescript?',
+        message: 'Are you the kind of bad ass mofo that wants to work in CoffeeScript?',
         default: false
     }
 
@@ -97,36 +97,37 @@ MammaGenerator.prototype.askFor = function askFor() {
 };
 
 MammaGenerator.prototype.app = function app() {
+    //node environment
     this.mkdir('config');
     this.mkdir('config/environments');
     this.mkdir('routes');
+    this.directory('routes');
+    this.directory('config');
+
+    //css, js, and images
     this.mkdir('assets/scripts');
     this.mkdir('assets/sass');
     this.mkdir('assets/images');
-
-
-    this.directory('routes');
-    this.directory('config');
     this.directory('assets');
 
-    // Frontend
+    // core node app
     this.mkdir('app');
     this.mkdir('app/views');
     this.mkdir('app/controllers');
     this.mkdir('app/models');
-
     this.directory('app');
-    this.template('app/index.html','app/index.html');
 
+
+    //conditionals for requirejs and coffeescript
     if(this.includeRequireJS){
     this.template('assets/scripts/require_config.js','assets/scripts/require_config.js');
     }
-    this.template('assets/scripts/app.js','assets/scripts/app.js');
-    this.template('assets/scripts/controllers/main.js','assets/scripts/controllers/main.js');
+
     if (this.coffee) {
     this.write('assets/scripts/hello.coffee', this.mainCoffeeFile);
     }
 
+    //test suite for karma
     this.mkdir('test');
     this.mkdir('test/spec');
     this.mkdir('test/spec/controllers');

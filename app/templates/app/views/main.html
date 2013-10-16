@@ -2,7 +2,15 @@
   <h1>'Allo, 'Allo!</h1>
   <p>You now have</p>
   <ul>
+  		<% if (jsLibrary === "angular") { %>
       <li ng-repeat="thing in awesomeThings">{{thing}}</li>
+       <% } if(includeModernizr) { %>
+            <li> Modernizr </li>
+            <% } if(includeRequireJS) { %>
+            <li> RequireJS </li>
+            <% } if(compassBootstrap) { %>
+            <li> Compass Bootstrap </li>
+            <% } %>
   </ul>
   <p>installed.</p>
   <h3>Enjoy coding! - Yeoman</h3>
