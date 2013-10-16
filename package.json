@@ -1,21 +1,21 @@
 {
-  "name": "generator-meanstack",
-  "version": "0.0.5",
-  "description": "The MEAN stack generator for Yeoman.",
+  "name": "generator-mamma",
+  "version": "0.0.1",
+  "description": "The mother of all yeoman generators",
   "keywords": [
     "yeoman-generator"
   ],
-  "homepage": "https://github.com/wlepinski/generator-meanstack",
-  "bugs": "https://github.com/wlepinski/generator-meanstack/issues",
+  "homepage": "https://bitbucket.com/mikeislearning/generator-mamma",
+  "bugs": "https://bitbucket.com/mikeislearning/generator-mamma/issues",
   "author": {
-    "name": "William Albino Lepinski",
-    "email": "willsp@gmail.com",
-    "url": "https://github.com/wlepinski"
+    "name": "Michael James MacPherson",
+    "email": "tothemac@gmail.com",
+    "url": "https://github.com/mikeislearning"
   },
   "main": "app/index.js",
   "repository": {
     "type": "git",
-    "url": "git://github.com/wlepinski/generator-meanstack.git"
+    "url": "git://bitbucket.com/mikeislearning/generator-mamma.git"
   },
   "scripts": {
     "test": "mocha"
@@ -27,7 +27,8 @@
     "mocha": "~1.10.0"
   },
   "engines": {
-    "node": ">=0.8.0"
+    "node": "0.8.x",
+    "npm" : "1.1.x"
   },
   "licenses": [
     {

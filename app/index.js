@@ -8,7 +8,7 @@ var MammaGenerator = module.exports = function MammaGenerator(args, options, con
     yeoman.generators.Base.apply(this, arguments);
 
     // this.testFramework = options['test-framework'] || 'mocha';
-    this.coffee = options.coffee;
+    //this.coffee = options.coffee;
 
     // // for hooks to resolve on mocha by default
     // if (!options['test-framework']) {
@@ -18,7 +18,7 @@ var MammaGenerator = module.exports = function MammaGenerator(args, options, con
     // // resolved to mocha by default (could be switched to jasmine for instance)
     // this.hookFor('test-framework', { as: 'app' });
 
-    // this.mainCoffeeFile = 'console.log "\'Allo from CoffeeScript!"';
+    this.mainCoffeeFile = 'console.log "\'Allo from CoffeeScript!"';
 
     this.on('end', function () {
         this.installDependencies({
@@ -67,11 +67,20 @@ MammaGenerator.prototype.askFor = function askFor() {
       value: 'includeModernizr',
       checked: true
     }]
+    },
+    {
+        type: 'confirm',
+        name: 'coffee',
+        message: 'Are you the kind of bad ass mofo that wantss to work in Coffeescript?',
+        default: false
     }
+
+
     ];
 
     this.prompt(prompts, function (props) {
         this.herokuIntegration = props.herokuIntegration;
+        this.coffee = props.coffee;
         this.jsLibrary = props.jsLibrary;
         var features = props.features;
 
@@ -95,6 +104,7 @@ MammaGenerator.prototype.app = function app() {
     this.mkdir('assets/sass');
     this.mkdir('assets/images');
 
+
     this.directory('routes');
     this.directory('config');
     this.directory('assets');
@@ -107,11 +117,15 @@ MammaGenerator.prototype.app = function app() {
 
     this.directory('app');
     this.template('app/index.html','app/index.html');
+
     if(this.includeRequireJS){
     this.template('assets/scripts/require_config.js','assets/scripts/require_config.js');
     }
     this.template('assets/scripts/app.js','assets/scripts/app.js');
     this.template('assets/scripts/controllers/main.js','assets/scripts/controllers/main.js');
+    if (this.coffee) {
+    this.write('assets/scripts/hello.coffee', this.mainCoffeeFile);
+    }
 
     this.mkdir('test');
     this.mkdir('test/spec');
@@ -136,7 +150,7 @@ MammaGenerator.prototype.projectfiles = function projectfiles() {
     // Express
     this.copy('_app.js', 'app.js');
     this.copy('_app_grunt.js', 'app_grunt.js');
-    this.copy('_server.js', 'server.js');
+    this.copy('_web.js', 'web.js');
 
     if (this.herokuIntegration) {
         this.copy('_Procfile', 'Procfile');
