@@ -28,8 +28,7 @@ grunt.loadNpmTasks('grunt-express');
 
   grunt.initConfig({
     yeoman: yeomanConfig,
-    watch: {
-      <% if (coffee) {%>
+    watch: {<% if (coffee) {%>
       coffee: {
         files: ['assets/scripts/{,*/}*.coffee'],
         tasks: ['coffee:dist']
@@ -37,8 +36,7 @@ grunt.loadNpmTasks('grunt-express');
       coffeeTest: {
         files: ['test/spec/{,*/}*.coffee'],
         tasks: ['coffee:test']
-      },
-      <% } %>
+      },<% } %>
       compass: {
                 files: ['assets/sass/{,*/}*.{scss,sass}'],
                 tasks: ['compass:dev', 'autoprefixer']
@@ -149,8 +147,7 @@ grunt.loadNpmTasks('grunt-express');
         'Gruntfile.js',
         'assets/scripts/{,*/}*.js'
       ]
-    },
-    <% if(coffee) {%>
+    },<% if(coffee) {%>
     coffee: {
       dist: {
         files: [{
@@ -170,8 +167,7 @@ grunt.loadNpmTasks('grunt-express');
           ext: '.js'
         }]
       }
-    },
-    <% } %>
+    },<% } %>
     // not used since Uglify task does concat,
     // but still available if needed
     /*concat: {
@@ -188,8 +184,7 @@ grunt.loadNpmTasks('grunt-express');
           ]
         }
       }
-    },
-    <% if (includeRequireJS) { %>
+    },<% if (includeRequireJS) { %>
     requirejs: {
         dist: {
             // Options: https://github.com/jrburke/r.js/blob/master/build/example.build.js
@@ -215,8 +210,7 @@ grunt.loadNpmTasks('grunt-express');
             ignorePath: '<%%= yeoman.app %>/'
         }
     },
-    <% } %>
-    <% if (includeModernizr) { %>
+    <% } if (includeModernizr) { %>
     modernizr: {
         devFile: 'assets/bower_components/modernizr/modernizr.js',
         outputFile: '<%%= yeoman.dist %>/scripts/modernizr/modernizr.js',
@@ -226,8 +220,7 @@ grunt.loadNpmTasks('grunt-express');
             '!<%%= yeoman.dist %>/scripts/vendor/*'
         ],
         uglify: true
-    }<% } %>
-    <% if (includeRequireJS) { %>,
+    }<% } if (includeRequireJS) { %>,
     bower: {
         options: {
             exclude: ['modernizr']
@@ -320,13 +313,7 @@ grunt.loadNpmTasks('grunt-express');
                     ]
                 }]
             },
-            styles: {
-                expand: true,
-                dot: true,
-                cwd: '.tmp/styles',
-                dest: '<%%= yeoman.dist %>/styles/',
-                src: '{,*/}*.css'
-            },
+            //to copy to the .tmp folder
             bower: {
                 expand: true,
                 dot: true,
@@ -341,19 +328,34 @@ grunt.loadNpmTasks('grunt-express');
                 dest: '.tmp/scripts/',
                 src: '{,*/}*.js'
             },
+            views: {
+                expand: true,
+                dot: true,
+                cwd: 'assets/views',
+                dest: '.tmp/views/',
+                src: '{,*/}*.html'
+            },
             images: {
                 expand: true,
                 dot: true,
                 cwd: 'assets/images',
                 dest: '.tmp/images/',
-                src: '{,*/}*.js'
+                src: '{,*/}*.{jpg,png,gif,jpeg}'
             },
-            allScripts: {
+            //to copy to the dist folder
+            tmpAssets: {
                 expand: true,
                 dot: true,
-                cwd: '.tmp/scripts/',
-                dest: '<%%= yeoman.dist %>/scripts/',
-                src: '{,*/}*.js'
+                cwd: '.tmp/',
+                dest: '<%%= yeoman.dist %>/',
+                src: '{,*/}*.*'
+            },
+            appToDist: {
+                expand: true,
+                dot: true,
+                cwd: '<%%= yeoman.app %>',
+                dest: '<%%= yeoman.dist %>',
+                src: '{,*/}*.*'
             },
         },
     concurrent: {
@@ -362,19 +364,16 @@ grunt.loadNpmTasks('grunt-express');
           'coffee:dist',<% } %>
           'copy:bower',
           'copy:scripts',
-          'copy:images'
+          'copy:images',
+          'copy:views'
       ],
-      test: [
-        <% if (coffee) { %>
+      test: [<% if (coffee) { %>
           'coffee',<% } %>
-          'copy:styles'
-],
-      dist: [
-        <% if (coffee) { %>
+          'copy:tmpAssets'
+      ],
+      dist: [<% if (coffee) { %>
           'coffee',<% } %>
           'compass',
-          'copy:styles',
-          'copy:allScripts',
           'imagemin',
           'svgmin',
           'htmlmin'
@@ -388,7 +387,7 @@ grunt.loadNpmTasks('grunt-express');
     },
     cdnify: {
       dist: {
-        html: ['<%%= yeoman.dist %>/*.html']
+        html: ['<%%= yeoman.dist %>/*.html','<%%= yeoman.dist %>/views/*.html']
       }
     },
     <% if (jsLibrary === 'angular' ) { %>
@@ -443,18 +442,14 @@ grunt.loadNpmTasks('grunt-express');
 
   grunt.registerTask('build', [
     'clean:dist',
+    'copy',
     'useminPrepare',
     'concurrent:dist',
     'concat',
-    'copy',
-    'cdnify',
-    <% if (includeRequireJS) { %>
-    'requirejs',<% } %>
-    <% if (includeModernizr) { %>
-    'modernizr',<% } %>
-    <% if (jsLibrary === 'angular' ) { %>
-    'ngmin',
-    <% } %>
+    'cdnify',<% if (includeRequireJS) { %>
+    'requirejs',<% } if (includeModernizr) { %>
+    'modernizr',<% } if (jsLibrary === 'angular' ) { %>
+    'ngmin',<% } %>
     'cssmin',
     'uglify',
     'rev',

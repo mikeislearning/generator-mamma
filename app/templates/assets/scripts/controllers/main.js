@@ -7,8 +7,11 @@ angular.module('<%= _.camelize(appname)%>App')
     $scope.awesomeThings = [
       'HTML5 Boilerplate',
       'AngularJS',
-      'Karma'
+      'Karma',
+      'Underscore'
     ];
   });
 
+<% } else { %>
+	console.log("Hello from main.js!")
 <% } %>

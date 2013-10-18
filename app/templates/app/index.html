@@ -11,10 +11,10 @@
         <meta name="viewport" content="width=device-width">
         <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
 
-        <!-- build:css({.tmp,assets) /styles/main.css -->
+        <!-- build:css(.tmp) /styles/main.css -->
         <link rel="stylesheet" href="styles/main.css">
         <!-- endbuild --><% if (includeModernizr) { %>
-        <!-- build:js scripts/vendor/modernizr.js -->
+        <!-- build:js(.tmp) scripts/vendor/modernizr.js -->
         <script src="scripts/modernizr/modernizr.js"></script>
         <!-- endbuild -->
         <% } %>
@@ -34,10 +34,14 @@
         <![endif]-->
         <div class="container" ng-view=""></div>
         <% } else { %>
-            <h2> Y U NO LIKE ANGULAR. Ok, you use jQuery. </h2>
-            <% } %>
-            <p> You may also have</p>
+        <div class="hero-unit">
+            <h1>'Allo, 'Allo!</h1>
+            <p>You now have</p>
             <ul>
+            <li>HTML5 Boilerplate</li>
+            <li>jQuery</li>
+            <li>Underscore</li>
+            <li>Karma</li>
             <% if(includeModernizr) { %>
             <li> Modernizr </li>
             <% } if(includeRequireJS) { %>
@@ -46,10 +50,13 @@
             <li> Compass Bootstrap </li>
             <% } %>
         </ul>
+          <p>installed.</p>
+          <h3>Enjoy coding! - Yeoman</h3>
+        </div>
+        <% } %>
 
 
-
-        <!-- build:js scripts/vendor.js -->
+        <!-- build:js(.tmp) scripts/vendor.js -->
         <% if (jsLibrary === 'angular' ) { %>
         <script src="scripts/angular/angular.js"></script>
         <% } else { %>
@@ -58,14 +65,14 @@
         <!-- endbuild -->
 
 
-        <!-- build:js scripts/modules.js -->
+        <!-- build:js(.tmp) scripts/modules.js -->
         <% if (jsLibrary === 'angular' ) { %>
         <script src="scripts/angular-resource/angular-resource.js"></script>
         <script src="scripts/angular-cookies/angular-cookies.js"></script>
         <script src="scripts/angular-sanitize/angular-sanitize.js"></script>
         <% } %>
         <!-- endbuild -->
-        <!-- build:js({.tmp,) scripts/scripts.js -->
+        <!-- build:js(.tmp) scripts/scripts.js -->
         <% if (jsLibrary === 'angular' ) { %>
         <script src="scripts/app.js"></script>
         <script src="scripts/controllers/main.js"></script>
@@ -76,10 +83,10 @@
         <!-- endbuild -->
 
         <% if(includeRequireJS) { %>
-        <!-- build:js scripts/requirejs/require.js -->
+        <!-- build:js(.tmp) scripts/requirejs/require.js -->
         <script src="scripts/requirejs/require.js"></script>
         <!-- endbuild -->
-        <!-- build:js scripts/require_config.js -->
+        <!-- build:js(.tmp) scripts/require_config.js -->
         <script data-main="scripts/require_config" src="scripts/requirejs/require.js"></script>
         <!-- endbuild -->
         <% } %>

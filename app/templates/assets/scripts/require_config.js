@@ -1,11 +1,6 @@
 require.config({
     paths: {
-        <% if(jsLibrary==="jQuery") { %>
-        jquery: 'jquery/jquery'
-        <% } else { %>
-        angular: 'angular/angular'
-        <% } %>
-        <% if (compassBootstrap) { %>,
+        jquery: '../bower_components/jquery/jquery'<% if (compassBootstrap) { %>,
         bootstrapAffix: 'sass-bootstrap/js/affix',
         bootstrapAlert: 'sass-bootstrap/js/alert',
         bootstrapButton: 'sass-bootstrap/js/button',
@@ -17,9 +12,8 @@ require.config({
         bootstrapScrollspy: 'sass-bootstrap/js/scrollspy',
         bootstrapTab: 'sass-bootstrap/js/tab',
         bootstrapTooltip: 'sass-bootstrap/js/tooltip',
-        bootstrapTransition: 'sass-bootstrap/js/transition'<% } %>
+        bootstrapTransition: 'sass-bootstrap/js/transition'
     },
-     <% if (compassBootstrap) { %>
     shim: {
         bootstrapAffix: {
             deps: ['jquery']
@@ -57,30 +51,14 @@ require.config({
         bootstrapTransition: {
             deps: ['jquery']
         }
+    <% } %>
     }
-    //add bootstrap requirements as you wish!
-<% } %>
-
 });
 
-
-
-require(['app', <% if (jsLibrary==="jQuery") {%>
- 'jquery'],
+require(['app', 'jquery'],
   function (app, $) {
     'use strict';
     // use app here
     console.log(app);
     console.log('Running jQuery %s', $().jquery);
 });
- <% } else { %>
-    'angular'],
-     function (app, angular) {
-    'use strict';
-        // use app here
-        console.log(app);
-    });
-   <% } %>
-
-
-

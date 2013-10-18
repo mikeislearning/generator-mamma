@@ -3,7 +3,7 @@
 <% if (jsLibrary === "angular") { %>
 
 angular.module('<%= _.camelize(appname)%>App', [])
-  .config(function ($routeProvider) {
+  .config(['$routeProvider', function ($routeProvider) {
     $routeProvider
       .when('/', {
         templateUrl: 'views/main.html',
@@ -12,6 +12,12 @@ angular.module('<%= _.camelize(appname)%>App', [])
       .otherwise({
         redirectTo: '/'
       });
-  });
+  }
+  ]//$routeProvider was added to give an alias
+  );
 
-<% } %>
+<% } else { %>
+
+  console.log("Hello from app.js!");
+
+  <% } %>

@@ -7,36 +7,41 @@ var yeoman = require('yeoman-generator');
 var MammaGenerator = module.exports = function MammaGenerator(args, options, config) {
     yeoman.generators.Base.apply(this, arguments);
 
+    //All options for testing that I've chosen to ignore for now
     // this.testFramework = options['test-framework'] || 'mocha';
-    //this.coffee = options.coffee;
-
     // // for hooks to resolve on mocha by default
     // if (!options['test-framework']) {
     // options['test-framework'] = 'mocha';
     // }
-
     // // resolved to mocha by default (could be switched to jasmine for instance)
     // this.hookFor('test-framework', { as: 'app' });
 
+    //writes what the potential coffee file will become
     this.mainCoffeeFile = 'console.log "\'Allo from CoffeeScript!"';
 
+    //if you type yo mamma --skip-install, it won't do npm and bower install
     this.on('end', function () {
         this.installDependencies({
             skipInstall: options['skip-install']
         });
     });
 
+    //this does something important. Not sure what
     this.pkg = JSON.parse(this.readFileAsString(path.join(__dirname, '../package.json')));
 };
 
 util.inherits(MammaGenerator, yeoman.generators.Base);
 
+/**
+ * Asking the user a number of questions
+ * @return {[type]} [description]
+ */
 MammaGenerator.prototype.askFor = function askFor() {
     var cb = this.async();
 
     // have Yeoman greet the user.
     console.log(this.yeoman);
-
+    console.log("Welcome to Mamma, the mother of all generators!\n")
     var prompts = [{
         type: 'confirm',
         name: 'herokuIntegration',
@@ -78,6 +83,11 @@ MammaGenerator.prototype.askFor = function askFor() {
 
     ];
 
+    /**
+     * This inserts the answers of the user into the function
+     * @param  {[string]} props [the results of the user's answers]
+     * @binds the results to the yeoman object
+     */
     this.prompt(prompts, function (props) {
         this.herokuIntegration = props.herokuIntegration;
         this.coffee = props.coffee;
@@ -96,6 +106,10 @@ MammaGenerator.prototype.askFor = function askFor() {
     }.bind(this));
 };
 
+/**
+ * Creates the directory and puts files into them
+ *
+ */
 MammaGenerator.prototype.app = function app() {
     //node environment
     this.mkdir('config');
@@ -108,19 +122,20 @@ MammaGenerator.prototype.app = function app() {
     this.mkdir('assets/scripts');
     this.mkdir('assets/sass');
     this.mkdir('assets/images');
+    this.mkdir('assets/views');
     this.directory('assets');
 
     // core node app
     this.mkdir('app');
-    this.mkdir('app/views');
+
     this.mkdir('app/controllers');
     this.mkdir('app/models');
     this.directory('app');
 
 
     //conditionals for requirejs and coffeescript
-    if(this.includeRequireJS){
-    this.template('assets/scripts/require_config.js','assets/scripts/require_config.js');
+    if(!this.includeRequireJS){
+    this.template('assets/scripts/hello.coffee','assets/scripts/require_config.js');
     }
 
     if (this.coffee) {
@@ -134,6 +149,10 @@ MammaGenerator.prototype.app = function app() {
     this.directory('test');
 };
 
+/**
+ * Technically does the same thing as app(), but these are more technical files
+ *
+ */
 MammaGenerator.prototype.projectfiles = function projectfiles() {
     // Dotfiles
     this.copy('_bowerrc', '.bowerrc');
