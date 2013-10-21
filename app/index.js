@@ -122,25 +122,32 @@ MammaGenerator.prototype.app = function app() {
     this.mkdir('assets/scripts');
     this.mkdir('assets/sass');
     this.mkdir('assets/images');
-    this.mkdir('assets/views');
     this.directory('assets');
 
     // core node app
     this.mkdir('app');
-
     this.mkdir('app/controllers');
     this.mkdir('app/models');
     this.directory('app');
 
+    //conditional for angular
+    if(this.jsLibrary === "angular"){
+        this.mkdir('assets/views');
+        this.mkdir('assets/scripts/controllers');
+        this.copy('angular/app.js','assets/scripts/app.js');
+        this.copy('angular/main.js','assets/scripts/controllers/main.js')
+        this.copy('angular/main.html','assets/views/main.html');
+    }
+
 
     //conditional for requirejs
     if(this.includeRequireJS){
-    this.template('_require_config.js','assets/scripts/require_config.js');
+        this.template('_require_config.js','assets/scripts/require_config.js');
     }
 
     //conditional for coffeescript
     if (this.coffee) {
-    this.write('assets/scripts/hello.coffee', this.mainCoffeeFile);
+        this.write('assets/scripts/hello.coffee', this.mainCoffeeFile);
     }
 
     //test suite for karma

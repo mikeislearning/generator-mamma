@@ -1,6 +1,5 @@
 'use strict';
 
-<% if (jsLibrary === "angular") { %>
 
 angular.module('<%= _.camelize(appname)%>App', [])
   .config(['$routeProvider', function ($routeProvider) {
@@ -16,8 +15,3 @@ angular.module('<%= _.camelize(appname)%>App', [])
   ]//$routeProvider was added to give an alias
   );
 
-<% } else { %>
-
-  console.log("Hello from app.js!");
-
-  <% } %>

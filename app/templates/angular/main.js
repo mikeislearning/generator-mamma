@@ -1,6 +1,6 @@
 'use strict';
 
-<% if (jsLibrary === "angular") { %>
+
 
 angular.module('<%= _.camelize(appname)%>App')
   .controller('MainCtrl', function ($scope) {
@@ -11,7 +11,3 @@ angular.module('<%= _.camelize(appname)%>App')
       'Underscore'
     ];
   });
-
-<% } else { %>
-	console.log("Hello from main.js!")
-<% } %>
