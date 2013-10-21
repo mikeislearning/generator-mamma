@@ -133,11 +133,12 @@ MammaGenerator.prototype.app = function app() {
     this.directory('app');
 
 
-    //conditionals for requirejs and coffeescript
-    if(!this.includeRequireJS){
-    this.template('assets/scripts/hello.coffee','assets/scripts/require_config.js');
+    //conditional for requirejs
+    if(this.includeRequireJS){
+    this.template('_require_config.js','assets/scripts/require_config.js');
     }
 
+    //conditional for coffeescript
     if (this.coffee) {
     this.write('assets/scripts/hello.coffee', this.mainCoffeeFile);
     }

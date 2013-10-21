@@ -369,6 +369,7 @@ grunt.loadNpmTasks('grunt-express');
       ],
       test: [<% if (coffee) { %>
           'coffee',<% } %>
+          'compass:dev'
           'copy:tmpAssets'
       ],
       dist: [<% if (coffee) { %>
