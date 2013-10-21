@@ -23,11 +23,19 @@ $ npm install -g yo
 
 Yeoman travels light. He didn't pack any generators when he moved in. You can think of a generator like a plug-in. You get to choose what type of application you wish to create, such as a Backbone application or even a Chrome extension.
 
-To install generator-mamma from npm, run:
+When this generator is published, you install generator-mamma from npm, run:
 
 ```
 $ npm install -g generator-mamma
 ```
+
+HOWEVER - it isn't, so currently you have to:
+```
+git clone git@bitbucket.org:mikeislearning/generator-mamma.git
+cd generator-mamma
+(sudo) npm link
+```
+
 
 Finally, initiate the generator:
 
