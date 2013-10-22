@@ -173,7 +173,7 @@ MammaGenerator.prototype.projectfiles = function projectfiles() {
     this.template('_package.json', 'package.json');
     this.template('_Gruntfile.js', 'Gruntfile.js');
     this.copy('_karma-e2e.conf.js', 'karma-e2e.conf.js');
-    this.copy('_karma.conf.js', 'karma.conf.js');
+    this.template('_karma.conf.js', 'karma.conf.js');
 
     // Express
     this.copy('_app.js', 'app.js');

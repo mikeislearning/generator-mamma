@@ -6,11 +6,13 @@ basePath = '';
 // list of files / patterns to load in the browser
 files = [
   JASMINE,
-  JASMINE_ADAPTER,
-  'app/bower_components/angular/angular.js',
-  'app/bower_components/angular-mocks/angular-mocks.js',
-  'app/scripts/*.js',
-  'app/scripts/**/*.js',
+  JASMINE_ADAPTER,<% if(jsLibrary === "angular") { %>
+  'assets/bower_components/angular/angular.js',
+  'assets/bower_components/angular-mocks/angular-mocks.js',  <% } else { %>
+  'app/bower_components/jquery/jquery.js',
+  'app/bower_components/jasmine-jquery/lib/jasmine-jquery.js',<% } %>
+  'assets/scripts/*.js',
+  'assets/scripts/**/*.js',
   'test/mock/**/*.js',
   'test/spec/**/*.js'
 ];
@@ -36,7 +38,7 @@ colors = true;
 logLevel = LOG_INFO;
 
 // enable / disable watching file and executing tests whenever any file changes
-autoWatch = false;
+autoWatch = true;
 
 // Start these browsers, currently available:
 // - Chrome
