@@ -41,18 +41,18 @@ grunt.loadNpmTasks('grunt-express');
                 files: ['assets/sass/{,*/}*.{scss,sass}'],
                 tasks: ['compass:dev', 'autoprefixer']
             },
-      // styles: {
-      //           files: ['.tmp/styles/{,*/}*.css'],
-      //           tasks: ['copy:styles', 'autoprefixer']
-      //       },
+      karma: {
+                files: ['test/spec/**/*.js', '{.tmp,assets}/scripts/**/*.js'],
+                tasks: ['karma']
+            },
       livereload: {
         options: {
           livereload: LIVERELOAD_PORT
         },
         files: [
-          '<%%= yeoman.app %>/{,*/}*.html',
+          '{.tmp,assets,app}/{,*/}*.html',
           '{.tmp,assets}/styles/{,*/}*.css',
-          '{.tmp,assets}/scripts/{,*/}*.js',
+          '{.tmp,assets}/scripts/**/*.js',
           'assets/images/{,*/}*.{png,jpg,jpeg,gif,webp,svg}'
         ]
       }
@@ -305,6 +305,7 @@ grunt.loadNpmTasks('grunt-express');
                     cwd: '<%%= yeoman.app %>',
                     dest: '<%%= yeoman.dist %>',
                     src: [
+                        '**/*.html',
                         '*.{ico,png,txt}',
                         '.htaccess',
                         'images/{,*/}*.{webp,gif}',
@@ -343,19 +344,13 @@ grunt.loadNpmTasks('grunt-express');
                 src: '{,*/}*.{jpg,png,gif,jpeg}'
             },
             //to copy to the dist folder
-            tmpAssets: {
+            //this can be modified to include most other files changing 'html' to '*'
+            tmpViews: {
                 expand: true,
                 dot: true,
                 cwd: '.tmp/',
-                dest: '<%%= yeoman.dist %>/',
-                src: '{,*/}*.*'
-            },
-            appToDist: {
-                expand: true,
-                dot: true,
-                cwd: '<%%= yeoman.app %>',
-                dest: '<%%= yeoman.dist %>',
-                src: '{,*/}*.*'
+                dest: '<%= yeoman.dist %>/',
+                src: '**/*.html'
             },
         },
     concurrent: {
@@ -421,6 +416,7 @@ grunt.loadNpmTasks('grunt-express');
       'compass:dev',
       'express:dev',
       'open',
+      'karma',
       'watch'
     ]);
   });
