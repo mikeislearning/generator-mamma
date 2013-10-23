@@ -11,25 +11,45 @@ module.exports = function(config) {
       <% if(jsLibrary === "angular") { %>
       'assets/bower_components/angular/angular.js',
       'assets/bower_components/angular-mocks/angular-mocks.js',
+      //src files
       'assets/scripts/*.js',
       'assets/scripts/**/*.js',
+       //spec test files
       'test/spec/*.js',
       'test/spec/**/*.js' <% } else { %>
       'assets/bower_components/jquery/jquery.js',
-      'test/helpers/jasmine-jquery.js',
+      'test/spec/javascripts/helpers/jasmine-jquery.js',
+      //remaining bower components needed, like underscore
       {pattern:'assets/bower_components/**/*.js',included: false},
+
+      //src files
       {pattern:'assets/scripts/*.js', included: false},
       {pattern:'assets/scripts/**/*.js', included: false},
+
+      //spec test files
       {pattern:'test/spec/*.js', included:  false},
       {pattern:'test/spec/**/*.js', included:  false},
-      'test/test_main.js'
+        'test/test_main.js',
       <% } %>
+      // fixtures...should possibly be disabled for angular...we will see
+      {
+        pattern: 'test/spec/javascripts/fixtures/*.html',
+        watched: true,
+        included: false,
+        served: true
+      }
     ],
 
     // list of files to exclude
     exclude:[<% if (includeRequireJS) { %>
       'assets/scripts/require_config.js' <% } %>
     ],
+
+    //disables html2js, allowing fixtures to work
+    preprocessors: {
+      '**/*.html': []
+    },
+
 
     // test results reporter to use
     // possible values: dots || progress || growl
