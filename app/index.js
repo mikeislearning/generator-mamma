@@ -16,7 +16,7 @@ var MammaGenerator = module.exports = function MammaGenerator(args, options, con
     // // resolved to mocha by default (could be switched to jasmine for instance)
     // this.hookFor('test-framework', { as: 'app' });
 
-    //writes what the potential coffee file will become
+    //writes what the potential .coffee file will become
     this.mainCoffeeFile = 'console.log "\'Allo from CoffeeScript!"';
 
     //if you type yo mamma --skip-install, it won't do npm and bower install
@@ -53,7 +53,7 @@ MammaGenerator.prototype.askFor = function askFor() {
     name: 'jsLibrary',
     message: 'Would you like to work with jQuery or Angular?',
     default: 'jQuery',
-    choices: ['jQuery', 'angular'],
+    choices: ['jQuery (includes handlebars.js)', 'angular'],
     },
     {
     type: 'checkbox',
