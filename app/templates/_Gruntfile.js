@@ -349,7 +349,7 @@ grunt.loadNpmTasks('grunt-express');
                 expand: true,
                 dot: true,
                 cwd: '.tmp/',
-                dest: '<%= yeoman.dist %>/',
+                dest: '<%%= yeoman.dist %>/',
                 src: '**/*.html'
             },
         },
@@ -364,8 +364,8 @@ grunt.loadNpmTasks('grunt-express');
       ],
       test: [<% if (coffee) { %>
           'coffee',<% } %>
-          'compass:dev'
-          'copy:tmpAssets'
+          'compass:dev',
+          'copy:tmpViews'
       ],
       dist: [<% if (coffee) { %>
           'coffee',<% } %>
