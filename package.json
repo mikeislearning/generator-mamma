@@ -27,8 +27,8 @@
     "mocha": "~1.10.0"
   },
   "engines": {
-    "node": "0.8.x",
-    "npm" : "1.1.x"
+    "node": "~0.8.x",
+    "npm" : "~1.1.x"
   },
   "licenses": [
     {

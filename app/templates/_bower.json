@@ -8,12 +8,13 @@
             "requirejs": "~2.1.8", <% } if (includeModernizr) { %>
             "modernizr": "~2.6.2",<% } if (angular) { %>
             "angular": "~1.2.0-rc.3",
+            "angular-route":"~1.2.0-rc.3",
+            <% } if(resourceModule) { %>
+            "angular-resource": "~1.2.0-rc.3",<% } if(cookiesModule) { %>
+            "angular-cookies": "~1.2.0-rc.3",<% } if(sanitizeModule) { %>
+            "angular-sanitize": "~1.2.0-rc.3",<% } %>
             "json3": "~3.2.4",
-            "es5-shim": "~2.0.8",
-            "angular-resource": "~1.2.0-rc.3",
-            "angular-cookies": "~1.2.0-rc.3",
-            "angular-sanitize": "~1.2.0-rc.3",
-            "angular-route":"~1.2.0-rc.3"<% } %>
+            "es5-shim": "~2.0.8"
     },
     "devDependencies": {<% if (angular) { %>
             "angular-mocks": "~1.2.0-rc.3",

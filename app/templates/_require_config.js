@@ -1,16 +1,17 @@
 require.config({
+    baseUrl: '/scripts/',
     paths: {
-        jquery: '../bower_components/jquery/jquery',
+        jquery: 'jquery/jquery',
         underscore: 'underscore/underscore',
         <% if (angular) { %>
-            angular: '../bower_components/angular/angular',
-            angularResource: '../bower_components/angular-resource/angular-resource',
-            angularCookies: '../bower_components/angular-cookies/angular-cookies',
-            angularSanitize: '../bower_components/angular-sanitize/angular-sanitize',
-            angularRoute: '../bower_components/angular-route/angular-route',
-            angularMocks: '../bower_components/angular-mocks/angular-mocks',
+            angular: 'angular/angular',
+            angularResource: 'angular-resource/angular-resource',
+            angularCookies: 'angular-cookies/angular-cookies',
+            angularSanitize: 'angular-sanitize/angular-sanitize',
+            angularRoute: 'angular-route/angular-route',
+            angularMocks: 'angular-mocks/angular-mocks',
 
-        <% } if (compassBootstrap) { %>,
+        <% } if (compassBootstrap) { %>
         bootstrapAffix: 'sass-bootstrap/js/affix',
         bootstrapAlert: 'sass-bootstrap/js/alert',
         bootstrapButton: 'sass-bootstrap/js/button',
@@ -73,7 +74,7 @@ require.config({
         },
         bootstrapTransition: {
             deps: ['jquery']
-        }
+        },
     <% } %>
       'app': {
             deps: [<% if(angular) { %>

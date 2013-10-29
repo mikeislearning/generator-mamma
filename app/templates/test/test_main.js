@@ -10,7 +10,8 @@ requirejs.config({
 
     paths: {<% if (angular) { %>
         'angular':'../bower_components/angular/angular',
-        'angular-mocks':'../bower_components/angular-mocks/angular-mocks',<% } %>
+        'angularMocks':'../bower_components/angular-mocks/angular-mocks',
+        'angularRoute':'../bower_components/angular-route/angular-route',<% } %>
         'jquery': '../bower_components/jquery/jquery',
         'jasmineJquery':'../../test/spec/javascripts/helpers/jasmine-jquery',
         'underscore': '../bower_components/underscore/underscore'

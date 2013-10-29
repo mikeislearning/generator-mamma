@@ -191,7 +191,7 @@ grunt.loadNpmTasks('grunt-express');
             // Options: https://github.com/jrburke/r.js/blob/master/build/example.build.js
             options: {
                 // `name` and `out` is set by grunt-usemin
-                baseUrl: 'assets/scripts',
+                baseUrl: '<%%= yeoman.dist %>/scripts',
                 optimize: 'none',
                 // TODO: Figure out how to make sourcemaps work with grunt-usemin
                 // https://github.com/yeoman/grunt-usemin/issues/30
@@ -419,7 +419,6 @@ grunt.loadNpmTasks('grunt-express');
       'compass:dev',
       'express:dev',
       'open',
-      'karma',
       'watch'
     ]);
   });

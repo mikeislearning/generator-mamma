@@ -21,21 +21,14 @@ describe('Controller: MainCtrl', function () {
   }));
 
   it('should attach a list of awesomeThings to the scope', function () {
-    expect(scope.awesomeThings.length).toBe(3);
+    expect(scope.awesomeThings.length).toBe(5);
   });
 });
 <% } %>
     describe('just checking', function() {
 
-        it('works for app', function() {
-            var el = $('<div></div>');
 
-            var app = new App(el);
-            app.render();
-            expect(el.text()).toEqual('require.js up and running');
-        });
-
-        it('works for underscore', function() {
+        it('that underscore works', function() {
             // just checking that _ works
             expect(_.size([1,2,3])).toEqual(3);
         });
