@@ -2,16 +2,14 @@ require.config({
     baseUrl: '/scripts/',
     paths: {
         jquery: 'jquery/jquery',
-        underscore: 'underscore/underscore',
-        <% if (angular) { %>
-            angular: 'angular/angular',
-            angularResource: 'angular-resource/angular-resource',
-            angularCookies: 'angular-cookies/angular-cookies',
-            angularSanitize: 'angular-sanitize/angular-sanitize',
-            angularRoute: 'angular-route/angular-route',
-            angularMocks: 'angular-mocks/angular-mocks',
-
-        <% } if (compassBootstrap) { %>
+    <% if (angular) { %>
+        angular: 'angular/angular',
+        angularResource: 'angular-resource/angular-resource',
+        angularCookies: 'angular-cookies/angular-cookies',
+        angularSanitize: 'angular-sanitize/angular-sanitize',
+        angularRoute: 'angular-route/angular-route',
+        angularMocks: 'angular-mocks/angular-mocks',
+    <% } if (compassBootstrap) { %>
         bootstrapAffix: 'sass-bootstrap/js/affix',
         bootstrapAlert: 'sass-bootstrap/js/alert',
         bootstrapButton: 'sass-bootstrap/js/button',
@@ -23,22 +21,23 @@ require.config({
         bootstrapScrollspy: 'sass-bootstrap/js/scrollspy',
         bootstrapTab: 'sass-bootstrap/js/tab',
         bootstrapTooltip: 'sass-bootstrap/js/tooltip',
-        bootstrapTransition: 'sass-bootstrap/js/transition'
-        <% } %>
+        bootstrapTransition: 'sass-bootstrap/js/transition',
+    <% } %>
+        underscore: 'underscore/underscore',
     },
     shim: {
-        <% if (angular) { %>
-            'angular' : {'exports' : 'angular'},
-            'angularResource': ['angular'],
-            'angularCookies':['angular'],
-            'angularSanitize':['angular'],
-            'angularRoute':['angular'],
-            'angularMocks': {
-                deps:['angular'],
-                'exports':'angular.mock'
-            }
-        <% } %>
-        <% if (compassBootstrap) { %>
+    <% if (angular) { %>
+        'angular' : {'exports' : 'angular'},
+        'angularResource': ['angular'],
+        'angularCookies':['angular'],
+        'angularSanitize':['angular'],
+        'angularRoute':['angular'],
+        'angularMocks': {
+            deps:['angular'],
+            'exports':'angular.mock'
+        },
+    <% } %>
+    <% if (compassBootstrap) { %>
         bootstrapAffix: {
             deps: ['jquery']
         },

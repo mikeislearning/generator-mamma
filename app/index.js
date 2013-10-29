@@ -141,10 +141,7 @@ MammaGenerator.prototype.askForAngular = function askForAngular() {
   }.bind(this));
 };
 
-MammaGenerator.prototype.askAngular = function askAngular() {
 
-
-};
 /**
  * Creates the directory and puts files into them
  *
@@ -173,7 +170,6 @@ MammaGenerator.prototype.app = function app() {
     if(this.angular){
         this.mkdir('assets/views');
         this.mkdir('assets/scripts/controllers');
-        this.copy('angular/app.js','assets/scripts/app.js');
         this.copy('angular/main.js','assets/scripts/controllers/main.js')
         this.copy('angular/main.html','assets/views/main.html');
     }

@@ -1,12 +1,6 @@
-define(
-	[
-		'app'
-	],
-	function ( app ) {
+define(['app'],	function ( app ) {
 
 'use strict';
-
-
 
 angular.module('<%= _.camelize(appname)%>App')
   .controller('MainCtrl', function ($scope) {
@@ -18,6 +12,8 @@ angular.module('<%= _.camelize(appname)%>App')
       'Underscore'
     ];
   });
+
+
 
 
 });
