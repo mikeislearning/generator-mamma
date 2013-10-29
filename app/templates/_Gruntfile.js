@@ -36,6 +36,10 @@ grunt.loadNpmTasks('grunt-express');
       coffeeTest: {
         files: ['test/spec/{,*/}*.coffee'],
         tasks: ['coffee:test']
+      },<% } if(angular){ %>
+      views:{
+        files: ['assets/views/**/*.html'],
+        tasks: ['copy:views']
       },<% } %>
       compass: {
                 files: ['assets/sass/{,*/}*.{scss,sass}'],
