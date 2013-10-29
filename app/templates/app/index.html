@@ -19,15 +19,13 @@
         <!-- endbuild -->
         <% } %>
     </head>
-    <% if (jsLibrary === 'angular' ) { %>
-    <body ng-app="<%= _.camelize(appname) %>App">
-    <% } else { %>
+
     <body>
-    <% } %>
+
         <!--[if lt IE 7]>
           <p class="chromeframe">You are using an outdated browser. <a href="http://browsehappy.com/">Upgrade your browser today</a> or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to better experience this site.</p>
         <![endif]-->
-        <% if (jsLibrary === 'angular' ) { %>
+        <% if (angular) { %>
         <!--[if lt IE 9]>
           <script src="scripts/es5-shim/es5-shim.js"></script>
           <script src="scripts/json3/lib/json3.min.js"></script>
@@ -56,31 +54,9 @@
         <% } %>
 
 
-        <!-- build:js(.tmp) scripts/vendor.js -->
-        <% if (jsLibrary === 'angular' ) { %>
-        <script src="scripts/angular/angular.js"></script>
-        <% } else { %>
-        <script src="scripts/jquery/jquery.js"></script>
-        <% } %>
-        <!-- endbuild -->
 
 
-        <!-- build:js(.tmp) scripts/modules.js -->
-        <% if (jsLibrary === 'angular' ) { %>
-        <script src="scripts/angular-resource/angular-resource.js"></script>
-        <script src="scripts/angular-cookies/angular-cookies.js"></script>
-        <script src="scripts/angular-sanitize/angular-sanitize.js"></script>
-        <% } %>
-        <!-- endbuild -->
-        <!-- build:js(.tmp) scripts/scripts.js -->
-        <% if (jsLibrary === 'angular' ) { %>
-        <script src="scripts/app.js"></script>
-        <script src="scripts/controllers/main.js"></script>
-        <% } %>
-        <% if (coffee) { %>
-        <script src="scripts/hello.js"></script>
-        <% } %>
-        <!-- endbuild -->
+
 
         <% if(includeRequireJS) { %>
         <!-- build:js(.tmp) scripts/requirejs/require.js -->
@@ -88,6 +64,20 @@
         <!-- endbuild -->
         <!-- build:js(.tmp) scripts/require_config.js -->
         <script data-main="scripts/require_config" src="scripts/requirejs/require.js"></script>
+        <!-- endbuild -->
+        <% } else {%>
+
+        <!-- build:js(.tmp) scripts/modules.js -->
+
+        <!-- endbuild -->
+        <!-- build:js(.tmp) scripts/scripts.js -->
+        <% if (angular) { %>
+        <script src="scripts/app.js"></script>
+        <script src="scripts/controllers/main.js"></script>
+        <% } %>
+        <% if (coffee) { %>
+        <script src="scripts/hello.js"></script>
+        <% } %>
         <!-- endbuild -->
         <% } %>
 

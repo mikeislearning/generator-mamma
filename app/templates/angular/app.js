@@ -1,7 +1,9 @@
+define( function(){
+
 'use strict';
 
 
-angular.module('<%= _.camelize(appname)%>App', [])
+return angular.module('<%= _.camelize(appname)%>App', [ 'ngRoute'])
   .config(['$routeProvider', function ($routeProvider) {
     $routeProvider
       .when('/', {
@@ -15,3 +17,4 @@ angular.module('<%= _.camelize(appname)%>App', [])
   ]//$routeProvider was added to give an alias
   );
 
+});

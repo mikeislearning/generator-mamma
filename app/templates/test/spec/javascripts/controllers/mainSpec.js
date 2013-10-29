@@ -1,4 +1,8 @@
-<% if(jsLibrary === 'angular') { %>'use strict';
+<% if (includeRequireJS) { %>
+
+  define(['app', 'jquery', 'angular'], function(App, $, angular) {
+
+<% } if(angular) { %>'use strict';
 
 describe('Controller: MainCtrl', function () {
 
@@ -20,10 +24,7 @@ describe('Controller: MainCtrl', function () {
     expect(scope.awesomeThings.length).toBe(3);
   });
 });
-<% } else { %>
-
-  define(['app', 'jquery', 'underscore'], function(App, $, _) {
-
+<% } %>
     describe('just checking', function() {
 
         it('works for app', function() {
@@ -52,6 +53,8 @@ describe('Controller: MainCtrl', function () {
       expect(elem).toBe('#container');
     });
   });
+
+<% if (includeRequireJS) { %>
 
 });
 

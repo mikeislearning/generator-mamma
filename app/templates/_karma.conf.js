@@ -8,19 +8,11 @@ module.exports = function(config) {
 
     // list of files / patterns to load in the browser
     files:[
-      <% if(jsLibrary === "angular") { %>
-      'assets/bower_components/angular/angular.js',
-      'assets/bower_components/angular-mocks/angular-mocks.js',
-      //src files
-      'assets/scripts/*.js',
-      'assets/scripts/**/*.js',
-       //spec test files
-      'test/spec/*.js',
-      'test/spec/**/*.js' <% } else { %>
-      'assets/bower_components/jquery/jquery.js',
-      'test/spec/javascripts/helpers/jasmine-jquery.js',
-      //remaining bower components needed, like underscore
-      {pattern:'assets/bower_components/**/*.js',included: false},
+    //jquery is somehow needed, regardless of what require does
+     'assets/bower_components/jquery/jquery.js',
+
+    <% if (includeRequireJS){ %>
+     {pattern:'assets/bower_components/**/*.js',included: false},
 
       //src files
       {pattern:'assets/scripts/*.js', included: false},
@@ -30,7 +22,19 @@ module.exports = function(config) {
       {pattern:'test/spec/*.js', included:  false},
       {pattern:'test/spec/**/*.js', included:  false},
         'test/test_main.js',
+
+
+      <% } else { %>
+      'assets/bower_components/**/*.js',
+      //src files
+      'assets/scripts/*.js',
+      'assets/scripts/**/*.js',
+       //spec test files
+      'test/spec/*.js',
+      'test/spec/**/*.js',
+      //remaining bower components needed, like underscore
       <% } %>
+
       // fixtures...should possibly be disabled for angular...we will see
       {
         pattern: 'test/spec/javascripts/fixtures/*.html',
@@ -45,15 +49,24 @@ module.exports = function(config) {
       'assets/scripts/require_config.js' <% } %>
     ],
 
-    //disables html2js, allowing fixtures to work
+    //specify any preprocessors you would like to work with
     preprocessors: {
-      '**/*.html': []
+      //'**/*.html': [],
+      'assets/scripts/**/*.js': 'coverage',
+      'assets/scripts/*.js': 'coverage',
+      'test/spec/**/*.js':'coverage'
+    },
+
+    //provides a summary of what code is covered by tests
+    coverageReporter: {
+      type : 'text-summary',
+      dir : 'coverage/'
     },
 
 
     // test results reporter to use
     // possible values: dots || progress || growl
-    reporters:['progress'],
+    reporters:['dots','coverage'],
 
     // web server port
     port:8080,

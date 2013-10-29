@@ -41,7 +41,8 @@ MammaGenerator.prototype.askFor = function askFor() {
 
     // have Yeoman greet the user.
     console.log(this.yeoman);
-    console.log("Welcome to Mamma, the mother of all generators!\n")
+    console.log("Welcome to Mamma, the mother of all generators!\n");
+    console.log("I include jQuery, Underscore, and HTML5 Boilerplate!\n")
     var prompts = [{
         type: 'confirm',
         name: 'herokuIntegration',
@@ -49,20 +50,13 @@ MammaGenerator.prototype.askFor = function askFor() {
         default: false
     },
     {
-    type: 'list',
-    name: 'jsLibrary',
-    message: 'Would you like to work with jQuery or Angular?',
-    default: 'jQuery',
-    choices: ['jQuery (includes handlebars.js)', 'angular'],
-    },
-    {
     type: 'checkbox',
     name: 'features',
     message: 'What more would you like?',
     choices: [{
-      name: 'Bootstrap for Sass (requires jQuery)',
+      name: 'Bootstrap for Sass',
       value: 'compassBootstrap',
-      checked: false
+      checked: true
     }, {
       name: 'RequireJS',
       value: 'includeRequireJS',
@@ -79,10 +73,7 @@ MammaGenerator.prototype.askFor = function askFor() {
         message: 'Are you the kind of bad ass mofo that wants to work in CoffeeScript?',
         default: false
     }
-
-
     ];
-
     /**
      * This inserts the answers of the user into the function
      * @param  {[string]} props [the results of the user's answers]
@@ -91,13 +82,13 @@ MammaGenerator.prototype.askFor = function askFor() {
     this.prompt(prompts, function (props) {
         this.herokuIntegration = props.herokuIntegration;
         this.coffee = props.coffee;
-        this.jsLibrary = props.jsLibrary;
-        var features = props.features;
 
+        var features = props.features;
         function hasFeature(feat) { return features.indexOf(feat) !== -1; }
 
         // manually deal with the response, get back and store the results.
         // we change a bit this way of doing to automatically do this in the self.prompt() method.
+
         this.compassBootstrap = hasFeature('compassBootstrap');
         this.includeRequireJS = hasFeature('includeRequireJS');
         this.includeModernizr = hasFeature('includeModernizr');
@@ -106,6 +97,54 @@ MammaGenerator.prototype.askFor = function askFor() {
     }.bind(this));
 };
 
+
+MammaGenerator.prototype.askForAngular = function askForAngular() {
+  var cb = this.async();
+
+  this.prompt([{
+    type: 'confirm',
+    name: 'angular',
+    message: 'Would you like to use AngularJS?',
+    default: true
+  }, {
+    type: 'checkbox',
+    name: 'angularMods',
+    message: 'Which angular modules would you like to use?',
+    choices: [{
+      value: 'resourceModule',
+      name: 'angular-resource.js',
+      checked: true
+    }, {
+      value: 'cookiesModule',
+      name: 'angular-cookies.js',
+      checked: true
+    }, {
+      value: 'sanitizeModule',
+      name: 'angular-sanitize.js',
+      checked: true
+    }],
+    when: function (props) {
+      return props.angular;
+    }
+  }], function (props) {
+    this.angular = props.angular;
+    this.angularMods = props.angularMods;
+    var angularMods = this.angularMods || false;
+    if(angularMods){
+        var hasAngularMods = function (mod) { return angularMods.indexOf(mod) !== -1; };
+        this.resourceModule = hasAngularMods('resourceModule');
+        this.cookiesModule = hasAngularMods('cookiesModule');
+        this.sanitizeModule = hasAngularMods('sanitizeModule');
+    }
+
+    cb();
+  }.bind(this));
+};
+
+MammaGenerator.prototype.askAngular = function askAngular() {
+
+
+};
 /**
  * Creates the directory and puts files into them
  *
@@ -131,7 +170,7 @@ MammaGenerator.prototype.app = function app() {
     this.directory('app');
 
     //conditional for angular
-    if(this.jsLibrary === "angular"){
+    if(this.angular){
         this.mkdir('assets/views');
         this.mkdir('assets/scripts/controllers');
         this.copy('angular/app.js','assets/scripts/app.js');

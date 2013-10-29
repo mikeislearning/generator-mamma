@@ -184,7 +184,8 @@ grunt.loadNpmTasks('grunt-express');
           ]
         }
       }
-    },<% if (includeRequireJS) { %>
+    },
+    <% if (includeRequireJS) { %>
     requirejs: {
         dist: {
             // Options: https://github.com/jrburke/r.js/blob/master/build/example.build.js
@@ -220,7 +221,7 @@ grunt.loadNpmTasks('grunt-express');
             '!<%%= yeoman.dist %>/scripts/vendor/*'
         ],
         uglify: true
-    }<% } if (includeRequireJS) { %>,
+    },<% } if (includeRequireJS) { %>
     bower: {
         options: {
             exclude: ['modernizr']
@@ -345,12 +346,14 @@ grunt.loadNpmTasks('grunt-express');
             },
             //to copy to the dist folder
             //this can be modified to include most other files changing 'html' to '*'
-            tmpViews: {
+            tmpToDist: {
                 expand: true,
                 dot: true,
                 cwd: '.tmp/',
-                dest: '<%%= yeoman.dist %>/',
+                dest: '<%%= yeoman.dist %>/',<% if(includeRequireJS){ %>
+                src: ['**/*.html', '**/*.js']<% } else { %>
                 src: '**/*.html'
+                <% } %>
             },
         },
     concurrent: {
@@ -365,7 +368,7 @@ grunt.loadNpmTasks('grunt-express');
       test: [<% if (coffee) { %>
           'coffee',<% } %>
           'compass:dev',
-          'copy:tmpViews'
+          'copy:tmpToDist'
       ],
       dist: [<% if (coffee) { %>
           'coffee',<% } %>
@@ -386,7 +389,7 @@ grunt.loadNpmTasks('grunt-express');
         html: ['<%%= yeoman.dist %>/*.html','<%%= yeoman.dist %>/views/*.html']
       }
     },
-    <% if (jsLibrary === 'angular' ) { %>
+    <% if (angular) { %>
     ngmin: {
       dist: {
         files: [{
@@ -445,7 +448,7 @@ grunt.loadNpmTasks('grunt-express');
     'concat',
     'cdnify',<% if (includeRequireJS) { %>
     'requirejs',<% } if (includeModernizr) { %>
-    'modernizr',<% } if (jsLibrary === 'angular' ) { %>
+    'modernizr',<% } if (angular) { %>
     'ngmin',<% } %>
     'cssmin',
     'uglify',
