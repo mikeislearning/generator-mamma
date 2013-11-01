@@ -41,13 +41,13 @@ grunt.loadNpmTasks('grunt-express');
         files: ['assets/views/**/*.html'],
         tasks: ['copy:views']
       },<% } %>
+      scripts:{
+        files: ['assets/scripts/**/*.js'],
+        tasks: ['copy:scripts']
+      },
       compass: {
                 files: ['assets/sass/{,*/}*.{scss,sass}'],
                 tasks: ['compass:dev', 'autoprefixer']
-            },
-      karma: {
-                files: ['test/spec/**/*.js', '{.tmp,assets}/scripts/**/*.js'],
-                tasks: ['karma']
             },
       livereload: {
         options: {

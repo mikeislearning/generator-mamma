@@ -43,12 +43,7 @@ MammaGenerator.prototype.askFor = function askFor() {
     console.log(this.yeoman);
     console.log("Welcome to Mamma, the mother of all generators!\n");
     console.log("I include jQuery, Underscore, and HTML5 Boilerplate!\n")
-    var prompts = [{
-        type: 'confirm',
-        name: 'herokuIntegration',
-        message: 'Are you planning to deploy this project on Heroku?',
-        default: false
-    },
+    var prompts = [
     {
     type: 'checkbox',
     name: 'features',
@@ -66,6 +61,12 @@ MammaGenerator.prototype.askFor = function askFor() {
       value: 'includeModernizr',
       checked: true
     }]
+    },
+    {
+        type: 'confirm',
+        name: 'herokuIntegration',
+        message: 'Are you planning to deploy this project on Heroku?',
+        default: false
     },
     {
         type: 'confirm',
@@ -202,6 +203,7 @@ MammaGenerator.prototype.projectfiles = function projectfiles() {
     this.copy('_editorconfig', '.editorconfig');
     this.copy('_jshintrc', '.jshintrc');
     this.copy('_gitattributes', '.gitattributes');
+    this.copy('_gitignore', '.gitignore');
 
     // Front
     this.template('_bower.json', 'bower.json');
@@ -213,10 +215,11 @@ MammaGenerator.prototype.projectfiles = function projectfiles() {
     // Express
     this.copy('_app.js', 'app.js');
     this.copy('_app_grunt.js', 'app_grunt.js');
-    this.copy('_web.js', 'web.js');
+
 
     if (this.herokuIntegration) {
         this.copy('_Procfile', 'Procfile');
         this.copy('_env', '.env');
+        this.copy('_web.js', 'web.js');
     }
 };
