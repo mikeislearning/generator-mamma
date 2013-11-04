@@ -15,7 +15,7 @@ requirejs.config({
         <% } %>
         'jquery': '../bower_components/jquery/jquery',
         'jasmineJquery':'../bower_components/jasmine-jquery/lib/jasmine-jquery',
-        'underscore': '../bower_components/underscore/underscore'
+        'lodash': '../bower_components/json3/vendor/lodash'
     },
 
     shim: { <% if (angular) { %>
@@ -33,7 +33,7 @@ requirejs.config({
         },
         'app': {
             deps: [
-            'jquery',<% if (angular) { %>'angular','underscore','angularMocks','angularRoute',<% } %>'jasmineJquery'
+            'jquery',<% if (angular) { %>'angular','angularMocks','angularRoute',<% } %>'jasmineJquery','lodash'
             ]
         }
 

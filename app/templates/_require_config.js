@@ -23,7 +23,7 @@ require.config({
         bootstrapTooltip: 'sass-bootstrap/js/tooltip',
         bootstrapTransition: 'sass-bootstrap/js/transition',
     <% } %>
-        underscore: 'underscore/underscore',
+        lodash: 'json3/vendor/lodash',
     },
     shim: {
     <% if (angular) { %>
@@ -79,7 +79,7 @@ require.config({
             deps: [<% if(angular) { %>
                 'angular',
                 'angularResource','angularCookies','angularSanitize','angularRoute',
-                <% } %> 'jquery','underscore'
+                <% } %> 'jquery','lodash'
             ]
         },
         'jquery': {

@@ -26,17 +26,22 @@ Yeoman travels light. He didn't pack any generators when he moved in. You can th
 When this generator is published, you install generator-mamma from npm, run:
 
 ```
-$ npm install -g generator-mamma
+$ npm install -g generator-mamma # DONT DO THIS YET!
 ```
 
-HOWEVER - it isn't, so currently you have to:
+*HOWEVER - it isn't, so currently you have to:*
+
 ```
 $ git clone git@bitbucket.org:mikeislearning/generator-mamma.git #clones into the folder generator-mamma
 $ cd generator-mamma # moves into that folder
 $ npm link # links this yeoman generator with your core npm
 ```
 
+__Once it is has successfully linked, let's start your project.__
+
 ```
+$ mkdir myNewMammaProject # or whatever you want to call it
+$ cd myNewMammaProject
 $ yo mamma # initiates the generator
 ```
 
@@ -44,14 +49,14 @@ You will receive the following plugins automatically
 
 ```
 - jQuery
-- Underscore
+- JSON3 and ES5-Shim for legacy browsers (includes lodash)
 - HTML5 Boilerplate
 - Sass with Compass as a CSS PreProcessor
 - Unit Testing with Karma and Jasmine
 - E2E Testing with Selenium and Protractor
 ```
 
-You will be prompted through a number of options
+__You will be prompted through a number of options__
 
 
 ```
@@ -74,14 +79,14 @@ This will provide grunt plugins to include CoffeeScript files in your workflow
 4. AngularJS
 
 You have the option of using AngularJS. Should you select it, you will be prompted to use:
-Angular Cookies -
-Angular Resource -
-Angular Sanitize -
+* Angular Cookies -
+* Angular Resource -
+* Angular Sanitize -
 ```
-Once you finish your selections...
+__Once you finish your selections, wait a few minutes for npm install & bower install to finish.__
 
 ```
-$ grunt install # this will run shell scripts to install selenium
+$ grunt install # this will run shell scripts to install selenium for testing
 ```
 ### Awesome Grunt Tasks for your workflow
 
@@ -102,6 +107,15 @@ $ grunt test:e2e # runs all e2e tests once
 $ grunt autotest # runs all unit tests in a livereload environment
 $ grunt coverage # provides a code coverage file to see how many of the javascript functions have been tested
 
+```
+###Future Considerations and Thoughts
+There are a number of things I would like to add as this evolves
+
+```
+- Ability to integrate into a phonegap environment
+- phantomcss runner to do regression testing
+- grunt-uncss to clean up unused css
+- grunt-html-snapshot for seo purposes
 ```
 
 
