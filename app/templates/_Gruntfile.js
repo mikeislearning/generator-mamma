@@ -128,6 +128,9 @@ grunt.loadNpmTasks('grunt-express');
     open: {
       dev: {
         url: 'http://localhost:3000'
+      },
+      coverage: {
+        path: 'http://localhost:5555'
       }
     },
     clean: {
@@ -573,7 +576,7 @@ grunt.loadNpmTasks('grunt-express');
       'concurrent:dev',
       'compass:dev',
       'express:dev',
-      'open',
+      'open:dev',
       'watch'
     ]);
   });
@@ -582,7 +585,7 @@ grunt.loadNpmTasks('grunt-express');
      grunt.task.run([
       'build',
       'express:dist',
-      'open',
+      'open:dev',
       'express-keepalive'
      ]);
   });

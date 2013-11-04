@@ -175,7 +175,6 @@ MammaGenerator.prototype.app = function app() {
         this.copy('angular/main.html','assets/views/main.html');
     }
 
-
     //conditional for requirejs
     if(this.includeRequireJS){
         this.template('_require_config.js','assets/scripts/require_config.js');

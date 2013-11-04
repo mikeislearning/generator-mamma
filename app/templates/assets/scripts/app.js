@@ -1,4 +1,4 @@
-<% if (includeRequireJS) { %>define(function() { <% } %>
+<% if (includeRequireJS) { %>define(['app'],function() { <% } %>
 
 <% if(angular) { %>
 
@@ -26,8 +26,43 @@ return angular.module('<%= _.camelize(appname)%>App', [ 'ngRoute'])
         this.el.html('require.js up and running');
     };
 
+    var source = $("#some-template").html();
+    var template = Handlebars.compile(source);
+
+    var data = {
+        users: [ {
+            person: {
+                firstName: "Mike",
+                lastName: "Mac"
+            },
+            jobTitle: "Front End Dev",
+            twitter: "mikeislearning"
+        }, {
+            person: {
+                firstName: "Mike",
+                lastName: "Finch"
+            },
+            jobTitle: "Photographer",
+            twitter: "photobasics"
+        }, {
+            person: {
+                firstName: "Mike",
+                lastName: "James"
+            },
+            jobTitle: "LEGO Geek",
+            twitter: "minifigures"
+        } ]
+    };
+
+    Handlebars.registerHelper('fullName', function(person) {
+      return person.firstName + " " + person.lastName;
+    });
+
+    $('#handleSample').append(template(data));
+
+
+
     return App;
 
-<% } %>
 
-<% if (includeRequireJS) {%> }); <% } %>
+<% } if (includeRequireJS) {%> }); <% } %>

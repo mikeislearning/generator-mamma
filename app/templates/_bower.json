@@ -11,10 +11,10 @@
             "angular": "~1.2.0-rc.3",
             "angular-route":"~1.2.0-rc.3",
             "angular-mocks":"~1.2.0-rc.3",
-            <% } if(resourceModule) { %>
+            <% if(resourceModule) { %>
             "angular-resource": "~1.2.0-rc.3",<% } if(cookiesModule) { %>
             "angular-cookies": "~1.2.0-rc.3",<% } if(sanitizeModule) { %>
-            "angular-sanitize": "~1.2.0-rc.3",<% } %>
+            "angular-sanitize": "~1.2.0-rc.3",<% } } %>
             "json3": "~3.2.4",
             "es5-shim": "~2.0.8"
     },

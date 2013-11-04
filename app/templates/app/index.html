@@ -38,8 +38,9 @@
             <ul>
             <li>HTML5 Boilerplate</li>
             <li>jQuery</li>
-            <li>Underscore</li>
-            <li>Karma</li>
+            <li>HandlebarsJS</li>
+            <li>Karma with Jasmine for Unit Testing</li>
+            <li>Selenium with Protractor for E2E Testing</li>
             <% if(includeModernizr) { %>
             <li> Modernizr </li>
             <% } if(includeRequireJS) { %>
@@ -51,6 +52,28 @@
           <p>installed.</p>
           <h3>Enjoy coding! - Yeoman</h3>
         </div>
+
+
+  <h1>Handlebars JS Example</h1>
+<div id="handleSample"> </div>
+<script id="some-template" type="text/x-handlebars-template"> <table>
+    <thead>
+        <th>Name</th>
+        <th>Job Title</th>
+        <th>Twitter</th>
+    </thead>
+    <tbody>
+        {{#users}}
+        <tr>
+            <td>{{fullName person}}</td>
+            <td>{{jobTitle}}</td>
+            <td><a href="https://twitter.com/{{twitter}}">@{{twitter}}</a></td>
+        </tr>
+        {{/users}}
+    </tbody>
+</table>
+</script>
+
         <% } %>
 
 
@@ -64,15 +87,21 @@
         <!-- endbuild -->
         <% } else {%>
 
-        <!-- build:js(.tmp) scripts/modules.js -->
-
+        <!-- build:js(.tmp) scripts/vendor/libs.js -->
+        <script src="scripts/jquery/jquery.js"></script>
+            <% if(angular) { %>
+            <script src="scripts/angular/angular.js"></script>
+            <% } else { %>
+        <script src="scripts/handlebars/handlebars/js"></script>
         <!-- endbuild -->
         <!-- build:js(.tmp) scripts/scripts.js -->
-        <% if (angular) { %>
+        <% } }if (angular) { %>
         <script src="scripts/app.js"></script>
         <script src="scripts/controllers/main.js"></script>
-        <% } %>
-        <% if (coffee) { %>
+        <% } else { %>
+        <!-- sample handle bars script -->
+        <script src="scripts/handle.js"></script>
+        <% } if (coffee) { %>
         <script src="scripts/hello.js"></script>
         <% } %>
         <!-- endbuild -->
