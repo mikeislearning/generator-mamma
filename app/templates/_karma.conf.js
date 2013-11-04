@@ -19,9 +19,9 @@ module.exports = function(config) {
       {pattern:'assets/scripts/**/*.js', included: false},
 
       //spec test files
-      {pattern:'test/spec/*.js', included:  false},
-      {pattern:'test/spec/**/*.js', included:  false},
-        'test/test_main.js',
+      {pattern:'test/unit/*.js', included:  false},
+      {pattern:'test/unit/**/*.js', included:  false},
+        'test/helpers/test_main.js',
 
 
       <% } else { %>
@@ -30,18 +30,12 @@ module.exports = function(config) {
       'assets/scripts/*.js',
       'assets/scripts/**/*.js',
        //spec test files
-      'test/spec/*.js',
-      'test/spec/**/*.js',
+      'test/unit/*.js',
+      'test/unit/**/*.js',
       //remaining bower components needed, like underscore
       <% } %>
 
-      // fixtures...should possibly be disabled for angular...we will see
-      {
-        pattern: 'test/spec/javascripts/fixtures/*.html',
-        watched: true,
-        included: false,
-        served: true
-      }
+
     ],
 
     // list of files to exclude
@@ -49,24 +43,24 @@ module.exports = function(config) {
       'assets/scripts/require_config.js' <% } %>
     ],
 
-    //specify any preprocessors you would like to work with
-    preprocessors: {
-      //'**/*.html': [],
-      'assets/scripts/**/*.js': 'coverage',
-      'assets/scripts/*.js': 'coverage',
-      'test/spec/**/*.js':'coverage'
-    },
+    // //specify any preprocessors you would like to work with
+    // preprocessors: {
+    //   //'**/*.html': [],
+    //   'assets/scripts/**/*.js': 'coverage',
+    //   'assets/scripts/*.js': 'coverage',
+    //   'test/spec/**/*.js':'coverage'
+    // },
 
-    //provides a summary of what code is covered by tests
-    coverageReporter: {
-      type : 'text-summary',
-      dir : 'coverage/'
-    },
+    // //provides a summary of what code is covered by tests
+    // coverageReporter: {
+    //   type : 'text-summary',
+    //   dir : 'coverage/'
+    // },
 
 
     // test results reporter to use
     // possible values: dots || progress || growl
-    reporters:['dots','coverage'],
+    reporters:['dots'],
 
     // web server port
     port:8080,

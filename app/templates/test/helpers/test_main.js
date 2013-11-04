@@ -6,26 +6,25 @@ for (var file in window.__karma__.files) {
 }
 requirejs.config({
     // Karma serves files from '/base'
-    baseUrl: '/base/assets/scripts/',
+    baseUrl: '/base/assets/scripts',
 
     paths: {<% if (angular) { %>
         'angular':'../bower_components/angular/angular',
         'angularMocks':'../bower_components/angular-mocks/angular-mocks',
-        'angularRoute':'../bower_components/angular-route/angular-route',<% } %>
+        'angularRoute':'../bower_components/angular-route/angular-route',
+        <% } %>
         'jquery': '../bower_components/jquery/jquery',
-        'jasmineJquery':'../../test/spec/javascripts/helpers/jasmine-jquery',
+        'jasmineJquery':'../bower_components/jasmine-jquery/lib/jasmine-jquery',
         'underscore': '../bower_components/underscore/underscore'
     },
 
-    shim: {
-        <% if (angular) { %>
+    shim: { <% if (angular) { %>
         'angular' : {'exports' : 'angular'},
         'angularRoute':['angular'],
         'angularMocks': {
                 deps:['angular'],
                 'exports':'angularMocks'
-            },
-            <% } %>
+            },<% } %>
          'jquery': {
             exports: '$'
         },
@@ -34,7 +33,7 @@ requirejs.config({
         },
         'app': {
             deps: [
-            'jquery','angular','underscore','angularMocks','angularRoute','jasmineJquery'
+            'jquery',<% if (angular) { %>'angular','underscore','angularMocks','angularRoute',<% } %>'jasmineJquery'
             ]
         }
 
@@ -50,8 +49,8 @@ requirejs.config({
 
 require(
     [
-        'app'
-        , 'controllers/main'
+        'app' <% if (angular) { %>
+        , 'controllers/main'  <% } %>
         // end:dependencies
     ],
     function ( app ) {
@@ -63,6 +62,6 @@ require(
             $html.addClass('ng-app');
             angular.bootstrap($html, [app['name']]);
         });
-          <% } %>
+  <% } %>
     }
 );

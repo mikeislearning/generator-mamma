@@ -39,16 +39,16 @@ grunt.loadNpmTasks('grunt-express');
       },<% } if(angular){ %>
       views:{
         files: ['assets/views/**/*.html'],
-        tasks: ['copy:views']
+        tasks: ['sync:views']
       },<% } %>
       scripts:{
         files: ['assets/scripts/**/*.js'],
-        tasks: ['copy:scripts']
+        tasks: ['sync:scripts']
       },
       compass: {
-                files: ['assets/sass/{,*/}*.{scss,sass}'],
-                tasks: ['compass:dev', 'autoprefixer']
-            },
+        files: ['assets/sass/{,*/}*.{scss,sass}'],
+        tasks: ['compass:dev', 'autoprefixer']
+      },
       livereload: {
         options: {
           livereload: LIVERELOAD_PORT
@@ -144,13 +144,10 @@ grunt.loadNpmTasks('grunt-express');
       dev: '.tmp'
     },
     jshint: {
-      options: {
-        jshintrc: '.jshintrc'
-      },
-      all: [
-        'Gruntfile.js',
-        'assets/scripts/{,*/}*.js'
-      ]
+       files: ['assets/scripts/**/*.js'],
+        options: {
+            ignores: ['assets/scripts/require_config.js']
+        }
     },<% if(coffee) {%>
     coffee: {
       dist: {
@@ -165,9 +162,9 @@ grunt.loadNpmTasks('grunt-express');
       test: {
         files: [{
           expand: true,
-          cwd: 'test/spec',
+          cwd: 'test/unit',
           src: '{,*/}*.coffee',
-          dest: '.tmp/spec',
+          dest: '.tmp/unit',
           ext: '.js'
         }]
       }
@@ -301,6 +298,44 @@ grunt.loadNpmTasks('grunt-express');
               }]
           }
     },
+    //analyzes and validates the html
+    validation: {
+        options: {
+            // Task-specific options go here.
+        },
+        html: {
+          files: [
+           ['app/*.html','assets/views/**/*.html']
+          ]
+        }
+    },
+    //checks the accessibility of the html files
+    arialinter: {
+      files: [
+        ['app/*.html','assets/views/**/*.html']
+      ],
+      options: {
+        templates: false,
+        levels: 'A'
+      }
+    },
+    //sync similar to copy, but only replaces modified files
+    sync: {
+        scripts:{
+          files: [{
+              cwd: 'assets/scripts',
+              dest: '.tmp/scripts/',
+              src: '**/*.js'
+          }]
+        },
+        views:{
+          files: [{
+            cwd: 'assets/views',
+            dest: '.tmp/views/',
+            src: '**/*.html'
+          }]
+        }
+    },
     // Put files not handled in other tasks here
     copy: {
             dist: {
@@ -382,12 +417,106 @@ grunt.loadNpmTasks('grunt-express');
           'htmlmin'
       ]
     },
+    //*****
+    //
+    //This section of the Gruntfile is
+    // all related to testing
+    //
+    //************///
     karma: {
       unit: {
-        configFile: 'karma.conf.js',
+        configFile: './karma.conf.js',
+        autoWatch: false,
         singleRun: true
+      },
+      unit_auto: {
+        configFile: './karma.conf.js',
+        autoWatch: true,
+        singleRun: false
+      },
+      unit_coverage: {
+        configFile: './karma.conf.js',
+        autoWatch: false,
+        singleRun: true,
+        reporters: ['dots', 'coverage'],
+        preprocessors: {
+          'assets/scripts/**/*.js': ['coverage']
+        },
+        coverageReporter: {
+          type : 'html',
+          dir : 'test/coverage/'
+        }
       }
     },
+     shell: {
+      options: {
+        stdout: true
+      },
+      selenium: {
+        command: './selenium/start',
+        options: {
+          stdout: false,
+          async: true
+        }
+      },
+      protractor_install: {
+        command: 'node ./node_modules/protractor/bin/install_selenium_standalone'
+      },
+      npm_install: {
+        command: 'npm install'
+      },
+      bower_install: {
+        command: 'node ./node_modules/bower/bin/bower install'
+      },
+    },
+    protractor: {
+      options: {
+        keepAlive: false,
+        configFile: "./test/protractor.conf.js"
+      },
+      singlerun: {},
+      auto: {
+        keepAlive: true,
+        options: {
+          args: {
+            seleniumPort: 4444
+          }
+        }
+      }
+    },
+    connect: {
+      options: {
+        base: 'app/'
+      },
+      webserver: {
+        options: {
+          port: 8888,
+          keepalive: true
+        }
+      },
+      devserver: {
+        options: {
+          port: 8888
+        }
+      },
+      testserver: {
+        options: {
+          port: 9999
+        }
+      },
+      coverage: {
+        options: {
+          base: 'coverage/',
+          port: 5555,
+          keepalive: true
+        }
+      }
+    },
+    //
+    //
+    //
+    //
+    //******** END TESTING SECTION ******//
     cdnify: {
       dist: {
         html: ['<%%= yeoman.dist %>/*.html','<%%= yeoman.dist %>/views/*.html']
@@ -416,6 +545,26 @@ grunt.loadNpmTasks('grunt-express');
     }
   });
 
+  //single run tests
+  grunt.registerTask('test', ['test:unit', 'test:e2e']);
+  grunt.registerTask('test:unit', ['karma:unit']);
+  grunt.registerTask('test:e2e', ['connect:testserver','protractor:singlerun']);
+
+  //autotest and watch tests
+  grunt.registerTask('autotest', ['karma:unit_auto']);
+
+  //coverage testing
+  grunt.registerTask('coverage', ['karma:unit_coverage','open:coverage','connect:coverage']);
+
+  grunt.registerTask('dist', function(){
+     grunt.task.run([
+      'build',
+      'express:dist',
+      'open',
+      'express-keepalive'
+     ]);
+  });
+
   grunt.registerTask('dev', function () {
     grunt.task.run([
       'clean:dev',
@@ -436,12 +585,9 @@ grunt.loadNpmTasks('grunt-express');
      ]);
   });
 
-  grunt.registerTask('test', [
-    'clean:dev',
-    'concurrent:test',
-    'express:test',
-    'karma'
-  ]);
+    //installation-related
+  grunt.registerTask('install', ['update','shell:protractor_install']);
+  grunt.registerTask('update', ['shell:npm_install','shell:bower_install']);
 
   grunt.registerTask('build', [
     'clean:dist',
@@ -457,6 +603,12 @@ grunt.loadNpmTasks('grunt-express');
     'uglify',
     'rev',
     'usemin'
+  ]);
+
+    //this one should almost always fail
+  grunt.registerTask('html',[
+    'arialinter',
+    'validation'
   ]);
 
   grunt.registerTask('default', [

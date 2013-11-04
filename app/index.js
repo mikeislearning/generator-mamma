@@ -47,7 +47,7 @@ MammaGenerator.prototype.askFor = function askFor() {
     {
     type: 'checkbox',
     name: 'features',
-    message: 'What more would you like?',
+    message: 'What features would you like to include (select with space bar)?',
     choices: [{
       name: 'Bootstrap for Sass',
       value: 'compassBootstrap',
@@ -188,8 +188,6 @@ MammaGenerator.prototype.app = function app() {
 
     //test suite for karma
     this.mkdir('test');
-    this.mkdir('test/spec');
-    this.mkdir('test/spec/controllers');
     this.directory('test');
 };
 
@@ -209,7 +207,6 @@ MammaGenerator.prototype.projectfiles = function projectfiles() {
     this.template('_bower.json', 'bower.json');
     this.template('_package.json', 'package.json');
     this.template('_Gruntfile.js', 'Gruntfile.js');
-    this.copy('_karma-e2e.conf.js', 'karma-e2e.conf.js');
     this.template('_karma.conf.js', 'karma.conf.js');
 
     // Express

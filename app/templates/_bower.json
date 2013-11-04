@@ -3,12 +3,14 @@
     "version": "0.0.0",
     "dependencies": {
             "jquery": "~1.10.2",
+            "jasmine-jquery":"*",
             "underscore": "*",<% if (compassBootstrap) { %>
             "sass-bootstrap": "~3.0.0",<% } if (includeRequireJS) { %>
             "requirejs": "~2.1.8", <% } if (includeModernizr) { %>
             "modernizr": "~2.6.2",<% } if (angular) { %>
             "angular": "~1.2.0-rc.3",
             "angular-route":"~1.2.0-rc.3",
+            "angular-mocks":"~1.2.0-rc.3",
             <% } if(resourceModule) { %>
             "angular-resource": "~1.2.0-rc.3",<% } if(cookiesModule) { %>
             "angular-cookies": "~1.2.0-rc.3",<% } if(sanitizeModule) { %>
