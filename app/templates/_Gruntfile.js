@@ -556,14 +556,6 @@ grunt.loadNpmTasks('grunt-express');
   //coverage testing
   grunt.registerTask('coverage', ['karma:unit_coverage','open:coverage','connect:coverage']);
 
-  grunt.registerTask('dist', function(){
-     grunt.task.run([
-      'build',
-      'express:dist',
-      'open',
-      'express-keepalive'
-     ]);
-  });
 
   grunt.registerTask('dev', function () {
     grunt.task.run([
@@ -611,9 +603,11 @@ grunt.loadNpmTasks('grunt-express');
     'validation'
   ]);
 
+  grunt.registerTask('js',[
+    'jshint'
+    ]);
+
   grunt.registerTask('default', [
-    'jshint',
-    'test',
-    'build'
+    'dev'
   ]);
 };

@@ -49,7 +49,7 @@ MammaGenerator.prototype.askFor = function askFor() {
     name: 'features',
     message: 'What features would you like to include (select with space bar)?',
     choices: [{
-      name: 'Bootstrap for Sass',
+      name: 'Twitter Bootstrap for Sass',
       value: 'compassBootstrap',
       checked: true
     }, {
