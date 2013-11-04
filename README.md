@@ -43,35 +43,35 @@ $ yo mamma # initiates the generator
 You will receive the following plugins automatically
 
 ```
-# jQuery
-# Underscore
-# HTML5 Boilerplate
-# Sass with Compass as a CSS PreProcessor
-# Unit Testing with Karma and Jasmine
-# E2E Testing with Selenium and Protractor
+- jQuery
+- Underscore
+- HTML5 Boilerplate
+- Sass with Compass as a CSS PreProcessor
+- Unit Testing with Karma and Jasmine
+- E2E Testing with Selenium and Protractor
 ```
 
 You will be prompted through a number of options
 
 
 ```
-##1. CSS and JavaScript Plugins
+1. CSS and JavaScript Plugins
 
-#Twitter Boostrap - The Sass version of twitter bootstrap, including its css, sprites, and numerous js plugins
+Twitter Boostrap - The Sass version of twitter bootstrap, including its css, sprites, and numerous js plugins
 
-#RequireJS - Make your site follow amd principles, where your js files are modular
+RequireJS - Make your site follow amd principles, where your js files are modular
 
-#Modernizr - a js library used to assist older browsers in rendering updated contents and tags
+Modernizr - a js library used to assist older browsers in rendering updated contents and tags
 
-##2. Heroku Integration
+2. Heroku Integration
 
 This will create a Procfile and web server to use with heroku
 
-##3. CoffeeScript
+3. CoffeeScript
 
 This will provide grunt plugins to include CoffeeScript files in your workflow
 
-##4. AngularJS
+4. AngularJS
 
 You have the option of using AngularJS. Should you select it, you will be prompted to use:
 Angular Cookies -
@@ -94,7 +94,7 @@ $ grunt html # will run an accessibility and validation linter on your html file
 
 $ grunt js # runs a jshint linter on your javascript files
 
-$ ## FOR TESTING
+$ ## FOR TESTING ##
 
 $ grunt test # runs all unit and e2e tests once
 $ grunt test:unit # runs all unit tests
