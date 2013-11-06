@@ -9,7 +9,9 @@ require.config({
         angularSanitize: 'angular-sanitize/angular-sanitize',
         angularRoute: 'angular-route/angular-route',
         angularMocks: 'angular-mocks/angular-mocks',
-    <% } if (compassBootstrap) { %>
+    <% } else { %>
+        handlebars: 'handlebars/handlebars',
+     <% }if (compassBootstrap) { %>
         bootstrapAffix: 'sass-bootstrap/js/affix',
         bootstrapAlert: 'sass-bootstrap/js/alert',
         bootstrapButton: 'sass-bootstrap/js/button',
@@ -79,7 +81,7 @@ require.config({
             deps: [<% if(angular) { %>
                 'angular',
                 'angularResource','angularCookies','angularSanitize','angularRoute',
-                <% } %> 'jquery','lodash'
+                <% } else { %> 'handlebars', <% } %>  'jquery','lodash'
             ]
         },
         'jquery': {

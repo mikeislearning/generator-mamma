@@ -195,15 +195,16 @@ grunt.loadNpmTasks('grunt-express');
             // Options: https://github.com/jrburke/r.js/blob/master/build/example.build.js
             options: {
                 // `name` and `out` is set by grunt-usemin
-                baseUrl: '<%%= yeoman.dist %>/scripts',
-                optimize: 'none',
+                baseUrl: '.tmp/scripts/',
+                //optimize: 'none',
+                mainConfigFile:'.tmp/scripts/require_config.js',
                 // TODO: Figure out how to make sourcemaps work with grunt-usemin
                 // https://github.com/yeoman/grunt-usemin/issues/30
                 //generateSourceMaps: true,
                 // required to support SourceMaps
                 // http://requirejs.org/docs/errors.html#sourcemapcomments
                 preserveLicenseComments: false,
-                useStrict: true,
+                // useStrict: true,
                 wrap: true
                 //uglify2: {} // https://github.com/mishoo/UglifyJS2
             }
@@ -217,14 +218,14 @@ grunt.loadNpmTasks('grunt-express');
     },
     <% } if (includeModernizr) { %>
     modernizr: {
-        devFile: 'assets/bower_components/modernizr/modernizr.js',
-        outputFile: '<%%= yeoman.dist %>/scripts/modernizr/modernizr.js',
-        files: [
-            '<%%= yeoman.dist %>/scripts/{,*/}*.js',
-            '<%%= yeoman.dist %>/styles/{,*/}*.css',
-            '!<%%= yeoman.dist %>/scripts/vendor/*'
-        ],
-        uglify: true
+        // devFile: 'assets/bower_components/modernizr/modernizr.js',
+        // outputFile: '<%%= yeoman.dist %>/scripts/modernizr/modernizr.js',
+        // files: [
+        //     '<%%= yeoman.dist %>/scripts/{,*/}*.js',
+        //     '<%%= yeoman.dist %>/styles/{,*/}*.css',
+        //     '!<%%= yeoman.dist %>/scripts/vendor/*'
+        // ],
+        // uglify: true
     },<% } if (includeRequireJS) { %>
     bower: {
         options: {
@@ -363,28 +364,28 @@ grunt.loadNpmTasks('grunt-express');
                 dot: true,
                 cwd: 'assets/bower_components',
                 dest: '.tmp/scripts/',
-                src: '{,*/}*.js'
+                src: '**/*.js'
             },
             scripts: {
                 expand: true,
                 dot: true,
                 cwd: 'assets/scripts',
                 dest: '.tmp/scripts/',
-                src: '{,*/}*.js'
+                src: '**/*.js'
             },
             views: {
                 expand: true,
                 dot: true,
                 cwd: 'assets/views',
                 dest: '.tmp/views/',
-                src: '{,*/}*.html'
+                src: '**/*.html'
             },
             images: {
                 expand: true,
                 dot: true,
                 cwd: 'assets/images',
                 dest: '.tmp/images/',
-                src: '{,*/}*.{jpg,png,gif,jpeg}'
+                src: '**/*.{jpg,png,gif,jpeg}'
             },
             //to copy to the dist folder
             //this can be modified to include most other files changing 'html' to '*'
@@ -393,8 +394,8 @@ grunt.loadNpmTasks('grunt-express');
                 dot: true,
                 cwd: '.tmp/',
                 dest: '<%%= yeoman.dist %>/',<% if(includeRequireJS){ %>
-                src: ['**/*.html', '**/*.js']<% } else { %>
-                src: '**/*.html'
+                src:'**/*.html' <% } else { %>
+                src: ['**/*.html', '**/*.js']
                 <% } %>
             },
         },
@@ -602,7 +603,8 @@ grunt.loadNpmTasks('grunt-express');
     'concat',
     'cdnify',<% if (includeRequireJS) { %>
     'requirejs',<% } if (includeModernizr) { %>
-    'modernizr',<% } if (angular) { %>
+    //'modernizr',
+    <% } if (angular) { %>
     'ngmin',<% } %>
     'cssmin',
     'uglify',
