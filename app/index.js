@@ -103,11 +103,21 @@ MammaGenerator.prototype.askForAngular = function askForAngular() {
   var cb = this.async();
 
   this.prompt([{
-    type: 'confirm',
-    name: 'angular',
-    message: 'Would you like to use AngularJS?',
-    default: true
-  }, {
+    type: 'list',
+    name: 'mvc',
+    message: 'Would you like to use an MVC?',
+   choices:[{
+    name:'Backbone',
+    value:'backbone'
+   },
+   {
+   name: 'Angular',
+   value: 'angular'
+    },
+    name: 'Nope',
+    value: 'nomvc'
+   ]},
+   {
     type: 'checkbox',
     name: 'angularMods',
     message: 'Which angular modules would you like to use?',
@@ -125,10 +135,12 @@ MammaGenerator.prototype.askForAngular = function askForAngular() {
       checked: true
     }],
     when: function (props) {
-      return props.angular;
+      return props.mvc === 'angular';
     }
   }], function (props) {
-    this.angular = props.angular;
+    this.angular = props.mvc === 'angular';
+    this.backbone = props.mvc === 'backbone';
+    this.nomvc = props.mvc === 'none';
     this.angularMods = props.angularMods;
     var angularMods = this.angularMods || false;
     if(angularMods){

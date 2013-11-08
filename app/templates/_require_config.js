@@ -9,9 +9,11 @@ require.config({
         angularSanitize: 'angular-sanitize/angular-sanitize',
         angularRoute: 'angular-route/angular-route',
         angularMocks: 'angular-mocks/angular-mocks',
-    <% } else { %>
+    <% } else if (backbone) { %>
+        backbone: 'backbone/backbone',
+        <% } else { %>
         handlebars: 'handlebars/handlebars',
-     <% }if (compassBootstrap) { %>
+     <% } if (compassBootstrap) { %>
         bootstrapAffix: 'sass-bootstrap/js/affix',
         bootstrapAlert: 'sass-bootstrap/js/alert',
         bootstrapButton: 'sass-bootstrap/js/button',
@@ -38,8 +40,12 @@ require.config({
             deps:['angular'],
             'exports':'angular.mock'
         },
-    <% } %>
-    <% if (compassBootstrap) { %>
+    <% } if (backbone) { %>
+        backbone:{
+            deps:['lodash',
+            'jquery']
+        },
+    <% } if (compassBootstrap) { %>
         bootstrapAffix: {
             deps: ['jquery']
         },
@@ -81,7 +87,9 @@ require.config({
             deps: [<% if(angular) { %>
                 'angular',
                 'angularResource','angularCookies','angularSanitize','angularRoute',
-                <% } else { %> 'handlebars', <% } %>  'jquery','lodash'
+                <% } else if (backbone) { %>
+                    'backbone', <% } else{ %>
+                 'handlebars', <% } %>  'jquery','lodash'
             ]
         },
         'jquery': {

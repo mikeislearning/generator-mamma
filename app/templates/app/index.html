@@ -39,22 +39,19 @@
             <ul>
             <li>HTML5 Boilerplate</li>
             <li>jQuery</li>
-            <li>HandlebarsJS</li>
             <li>Karma with Jasmine for Unit Testing</li>
-            <li>Selenium with Protractor for E2E Testing</li>
-            <% if(includeModernizr) { %>
-            <li> Modernizr </li>
-            <% } if(includeRequireJS) { %>
-            <li> RequireJS </li>
-            <% } if(compassBootstrap) { %>
-            <li> Compass Bootstrap </li>
+            <li>Selenium with Protractor for E2E Testing</li><% if(backbone){ %>
+            <li>Backbone <li> <% } if(includeModernizr) { %>
+            <li> Modernizr </li> <% } if(includeRequireJS) { %>
+            <li> RequireJS </li> <% } if(compassBootstrap) { %>
+            <li> Compass Bootstrap </li><% } if(!angular && !backbone){ %>
+            <li>HandlebarsJS</li>
             <% } %>
         </ul>
           <p>installed.</p>
           <h3>Enjoy coding! - Yeoman</h3>
         </div>
-
-
+        <% } if (!angular && !backbone) { %>
   <h1>Handlebars JS Example</h1>
 <div id="handleSample"> </div>
 <script id="some-template" type="text/x-handlebars-template">
@@ -76,7 +73,7 @@
 </table>
 </script>
 
-        <% } %>
+<% } %>
 
 
 
@@ -93,6 +90,10 @@
         <script src="scripts/jquery/jquery.js"></script>
             <% if(angular) { %>
             <script src="scripts/angular/angular.js"></script>
+            <% } else if(backbone) { %>
+              <script src="json/vendor/lodash.js"></script>
+            <script src="scripts/backbone/backbone.js"></script>
+
             <% } else { %>
             <script src="scripts/handlebars/handlebars/js"></script>
         <!-- endbuild -->

@@ -49,7 +49,7 @@
         "matchdep": "~0.1.2",
         "connect-livereload": "~0.2.0",
         "grunt-google-cdn": "~0.2.0",<% if (angular) { %>
-        "grunt-ngmin": "~0.0.2",<% } else { %>
+        "grunt-ngmin": "~0.0.2",<% } if (!angular) { %>
         "grunt-contrib-handlebars": "*",<% } %>
         "time-grunt": "~0.1.1"
     }
