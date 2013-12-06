@@ -83,6 +83,12 @@ require.config({
             deps: ['jquery']
         },
     <% } %>
+       'jquery': {
+            exports: '$'
+        },
+        'lodash':{
+            exports: '_'
+        },
       'app': {
             deps: [<% if(angular) { %>
                 'angular',
@@ -91,9 +97,6 @@ require.config({
                     'backbone', <% } else{ %>
                  'handlebars', <% } %>  'jquery','lodash'
             ]
-        },
-        'jquery': {
-            exports: '$'
         }
     },
     map: {

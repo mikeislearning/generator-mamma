@@ -140,7 +140,7 @@ MammaGenerator.prototype.askForAngular = function askForAngular() {
   }], function (props) {
     this.angular = props.mvc === 'angular';
     this.backbone = props.mvc === 'backbone';
-    this.nomvc = props.mvc === 'none';
+    this.nomvc = props.mvc === 'nomvc';
     this.angularMods = props.angularMods;
     var angularMods = this.angularMods || false;
     if(angularMods){

@@ -3,4 +3,5 @@ dist
 coverage
 .tmp
 .sass-cache
-app/bower_components
+assets/bower_components
+test/coverage

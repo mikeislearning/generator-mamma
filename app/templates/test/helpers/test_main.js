@@ -12,6 +12,10 @@ requirejs.config({
         'angular':'../bower_components/angular/angular',
         'angularMocks':'../bower_components/angular-mocks/angular-mocks',
         'angularRoute':'../bower_components/angular-route/angular-route',
+        <% } if (backbone) {%>
+         'backbone': '../bower_components/backbone/backbone'
+         <% } if(!angular && !backbone) {%>
+        'handlebars':'../bower_components/handlebars/handlebars'
         <% } %>
         'jquery': '../bower_components/jquery/jquery',
         'jasmineJquery':'../bower_components/jasmine-jquery/lib/jasmine-jquery',
@@ -24,16 +28,21 @@ requirejs.config({
         'angularMocks': {
                 deps:['angular'],
                 'exports':'angularMocks'
-            },<% } %>
+        },<% } if (backbone) { %>
+        'backbone':{
+            deps:['lodash',
+            'jquery'],
+            exports: 'Backbone'
+        },<% } %>
          'jquery': {
             exports: '$'
         },
-        'underscore': {
+        'lodash': {
             exports: '_'
         },
         'app': {
             deps: [
-            'jquery',<% if (angular) { %>'angular','angularMocks','angularRoute',<% } %>'jasmineJquery','lodash'
+            <% if (angular) { %>'angular','angularMocks','angularRoute',<% } if (backbone) { %>'backbone',<% } if (!angular && !backbone) { %> 'handlebars',<% } %> 'jquery', 'jasmineJquery','lodash'
             ]
         }
 
