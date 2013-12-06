@@ -54,6 +54,7 @@ You will receive the following plugins automatically
 - Sass with Compass as a CSS PreProcessor
 - Unit Testing with Karma and Jasmine
 - E2E Testing with Selenium and Protractor
+- AngularJS or Backbone as a JS MVC Framework
 ```
 
 __You will be prompted through a number of options__
@@ -76,9 +77,9 @@ This will create a Procfile and web server to use with heroku
 
 This will provide grunt plugins to include CoffeeScript files in your workflow
 
-4. AngularJS
+4. AngularJS or Backbone
 
-You have the option of using AngularJS. Should you select it, you will be prompted to use:
+If you select AngularJS, you will be prompted to use:
 * Angular Cookies -
 * Angular Resource -
 * Angular Sanitize -
